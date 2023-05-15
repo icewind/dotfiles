@@ -125,7 +125,9 @@ require("lspconfig").gdscript.setup({
 -- ---------------------------------------------------------------
 -- Integrate mason and null-ls to automatically install all the tools
 -- ---------------------------------------------------------------
-require("null-ls").setup()
+require("null-ls").setup({
+	on_attach = on_attach,
+})
 require("mason-null-ls").setup({
 	ensure_installed = { "stylua", "prettierd", "eslint_d", "cspell" },
 	automatic_setup = true,
