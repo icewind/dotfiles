@@ -1,5 +1,5 @@
 local function map(mode, lhs, rhs, opts)
-	local options = { noremap = true }
+	local options = { noremap = true, silent = true }
 	if opts then
 		options = vim.tbl_extend("force", options, opts)
 	end
@@ -10,8 +10,8 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 --Remap for dealing with word wrap
-map("n", "k", "v:count == 0 ? 'gk' : 'k'", { noremap = true, expr = true, silent = true })
-map("n", "j", "v:count == 0 ? 'gj' : 'j'", { noremap = true, expr = true, silent = true })
+map("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true })
+map("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true })
 
 -- Switch buffers
 map("n", "<Tab>", ":bnext<CR>")
@@ -31,13 +31,13 @@ map("n", "<leader>h", ":split<cr>")
 map("n", "<leader>v", ":vsplit<cr>")
 
 -- Faster split resize
-map("n", "<C-S-Left>", ":vertical resize +3<cr>", { noremap = true, silent = true })
-map("n", "<C-S-Right>", ":vertical resize -3<cr>", { noremap = true, silent = true })
-map("n", "<C-S-Up>", ":resize +3<cr>", { noremap = true, silent = true })
-map("n", "<C-S-Down>", ":resize -3<cr>", { noremap = true, silent = true })
+map("n", "<C-S-Left>", ":vertical resize +3<cr>")
+map("n", "<C-S-Right>", ":vertical resize -3<cr>")
+map("n", "<C-S-Up>", ":resize +3<cr>")
+map("n", "<C-S-Down>", ":resize -3<cr>")
 
 --After searching, pressing escape stops the highlight
-map("n", "<esc>", ":noh<cr><esc>", { silent = true })
+map("n", "<esc>", ":noh<cr><esc>")
 
 -- Hop(EasyMotion) for normal and visual modes
 map("n", "<leader><space>", "<cmd>lua require'hop'.hint_char1()<cr>")
@@ -72,40 +72,28 @@ vim.keymap.set("n", "<leader>sd", require("telescope.builtin").diagnostics, { de
 vim.keymap.set("n", "<leader>gs", require("telescope.builtin").git_status, { desc = "[G]it [S]tatus" })
 
 -- Bufferline
-map("n", "<leader>b", ":BufferLinePick<cr>", { noremap = true, silent = true })
-map("n", "<leader>1", "<Cmd>BufferLineGoToBuffer 1<CR>", { noremap = true, silent = true })
-map("n", "<leader>2", "<Cmd>BufferLineGoToBuffer 2<CR>", { noremap = true, silent = true })
-map("n", "<leader>3", "<Cmd>BufferLineGoToBuffer 3<CR>", { noremap = true, silent = true })
-map("n", "<leader>4", "<Cmd>BufferLineGoToBuffer 4<CR>", { noremap = true, silent = true })
-map("n", "<leader>5", "<Cmd>BufferLineGoToBuffer 5<CR>", { noremap = true, silent = true })
-map("n", "<leader>6", "<Cmd>BufferLineGoToBuffer 6<CR>", { noremap = true, silent = true })
-map("n", "<leader>7", "<Cmd>BufferLineGoToBuffer 7<CR>", { noremap = true, silent = true })
-map("n", "<leader>8", "<Cmd>BufferLineGoToBuffer 8<CR>", { noremap = true, silent = true })
-map("n", "<leader>9", "<Cmd>BufferLineGoToBuffer 9<CR>", { noremap = true, silent = true })
+map("n", "<leader>b", ":BufferLinePick<cr>")
+map("n", "<leader>1", "<Cmd>BufferLineGoToBuffer 1<CR>")
+map("n", "<leader>2", "<Cmd>BufferLineGoToBuffer 2<CR>")
+map("n", "<leader>3", "<Cmd>BufferLineGoToBuffer 3<CR>")
+map("n", "<leader>4", "<Cmd>BufferLineGoToBuffer 4<CR>")
+map("n", "<leader>5", "<Cmd>BufferLineGoToBuffer 5<CR>")
+map("n", "<leader>6", "<Cmd>BufferLineGoToBuffer 6<CR>")
+map("n", "<leader>7", "<Cmd>BufferLineGoToBuffer 7<CR>")
+map("n", "<leader>8", "<Cmd>BufferLineGoToBuffer 8<CR>")
+map("n", "<leader>9", "<Cmd>BufferLineGoToBuffer 9<CR>")
 
 -- Display diagnostics messages
-map(
-	"n",
-	"<leader>e",
-	"<cmd>lua vim.diagnostic.open_float()<cr>",
-	{ silent = true, noremap = true, desc = "Show diagnostic message in float window" }
-)
-map("n", "<leader>xx", "<cmd>Trouble<cr>", { silent = true, noremap = true, desc = "Diagnostics" })
-map(
-	"n",
-	"<leader>xw",
-	"<cmd>Trouble workspace_diagnostics<cr>",
-	{ silent = true, noremap = true, desc = "Workspace diagnostics" }
-)
-map(
-	"n",
-	"<leader>xd",
-	"<cmd>Trouble document_diagnostics<cr>",
-	{ silent = true, noremap = true, desc = "Document diagnostics" }
-)
+map("n", "<leader>e", "<cmd>lua vim.diagnostic.open_float()<cr>", { desc = "Show diagnostic message in float window" })
+map("n", "<leader>xx", "<cmd>Trouble<cr>", { desc = "Diagnostics" })
+map("n", "<leader>xw", "<cmd>Trouble workspace_diagnostics<cr>", { desc = "Workspace Diagnostics" })
+map("n", "<leader>xd", "<cmd>Trouble document_diagnostics<cr>", { desc = "Document diagnostics" })
 
 map("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<cr>")
 map("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<cr>")
 
 -- Database
-map("n", "<leader>du", "<cmd>DBUIToggle<cr>", { silent = true, noremap = true, desc = "[D]atabase [U]i" })
+map("n", "<leader>du", "<cmd>DBUIToggle<cr>", { desc = "[D]atabase [U]i" })
+
+-- Editing shortcuts
+map("n", "<leader>r", ":%s///g<left><left>", { silent = false, desc = "Quick replace selected text" })
