@@ -182,6 +182,11 @@ require("packer").startup(function(use)
 	use({ "lewis6991/gitsigns.nvim", config = get_config("gitsigns") })
 
 	-- ---------------------------------------------------------------
+	-- HTTP Client
+	-- ---------------------------------------------------------------
+	use({ "rest-nvim/rest.nvim", config = get_config("rest") })
+
+	-- ---------------------------------------------------------------
 	-- Language/Framework specific plugins
 	-- ---------------------------------------------------------------
 	-- These plugins should not use `get_config` helper and contain all the required parameters in one file
