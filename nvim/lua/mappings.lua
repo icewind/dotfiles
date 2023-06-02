@@ -97,5 +97,3 @@ map("n", "<leader>du", "<cmd>DBUIToggle<cr>", { desc = "[D]atabase [U]i" })
 
 -- Editing shortcuts
 map("n", "<leader>r", ":%s///g<left><left>", { silent = false, desc = "Quick replace selected text" })
-
-map("n", "<leader>rr", "<Plug>RestNvim", { desc = "Send current line or selected text to REST client" })
