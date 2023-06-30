@@ -4,9 +4,6 @@ require("mason").setup()
 -- Improve lua development
 require("neodev").setup()
 
--- Turn on LSP status information
-require("fidget").setup()
-
 -- Attach LSP to autocompletion
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
