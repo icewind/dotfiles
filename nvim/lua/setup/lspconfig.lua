@@ -14,6 +14,7 @@ local lsp_formatters_map = {
 	-- These null-ls should use prettierd
 	typescript = "null-ls",
 	typescriptreact = "null-ls",
+	astro = "null-ls",
 }
 
 -- to avoid the conflict we will select an appropriate server for specified file types
@@ -122,15 +123,40 @@ require("lspconfig").gdscript.setup({
 -- ---------------------------------------------------------------
 -- Integrate mason and null-ls to automatically install all the tools
 -- ---------------------------------------------------------------
-require("null-ls").setup({
+local null_ls = require("null-ls")
+null_ls.setup({
 	on_attach = on_attach,
 })
 require("mason-null-ls").setup({
 	ensure_installed = { "stylua", "prettierd", "eslint_d", "cspell" },
-	automatic_setup = true,
 	handlers = {
+		stylua = function()
+			null_ls.register(require("null-ls").builtins.formatting.stylua)
+		end,
+		cspell = function()
+			null_ls.register(require("null-ls").builtins.diagnostics.cspell)
+		end,
 		prettierd = function()
-			require("null-ls").register(require("null-ls").builtins.formatting.prettierd.with({
+			null_ls.register(require("null-ls").builtins.formatting.prettierd.with({
+				filetypes = {
+					"javascript",
+					"javascriptreact",
+					"typescript",
+					"typescriptreact",
+					"vue",
+					"css",
+					"scss",
+					"less",
+					"html",
+					"json",
+					"jsonc",
+					"yaml",
+					"markdown",
+					"markdown.mdx",
+					"graphql",
+					"handlebars",
+					"astro",
+				},
 				condition = function(utils)
 					return utils.root_has_file("package.json")
 						or utils.root_has_file(".prettierrc")
@@ -140,11 +166,9 @@ require("mason-null-ls").setup({
 			}))
 		end,
 		eslint_d = function()
-			require("null-ls").register(require("null-ls").builtins.diagnostics.eslint_d.with({
+			null_ls.register(require("null-ls").builtins.diagnostics.eslint_d.with({
 				condition = function(utils)
-					return utils.root_has_file("package.json")
-						or utils.root_has_file(".eslintrc.json")
-						or utils.root_has_file(".eslintrc.js")
+					return utils.root_has_file(".eslintrc.json") or utils.root_has_file(".eslintrc.js")
 				end,
 			}))
 		end,
