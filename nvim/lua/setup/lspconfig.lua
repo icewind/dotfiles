@@ -93,6 +93,7 @@ local language_servers = {
 	tsserver = {},
 	astro = {},
 	prismals = {},
+	svelte = {},
 }
 
 -- Ensure the servers above are installed
