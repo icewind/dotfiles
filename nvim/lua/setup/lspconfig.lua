@@ -130,12 +130,6 @@ null_ls.setup({
 require("mason-null-ls").setup({
 	ensure_installed = { "stylua", "prettierd", "eslint_d", "cspell" },
 	handlers = {
-		stylua = function()
-			null_ls.register(require("null-ls").builtins.formatting.stylua)
-		end,
-		cspell = function()
-			null_ls.register(require("null-ls").builtins.diagnostics.cspell)
-		end,
 		prettierd = function()
 			null_ls.register(require("null-ls").builtins.formatting.prettierd.with({
 				filetypes = {

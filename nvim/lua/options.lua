@@ -103,7 +103,7 @@ set.completeopt = { "menuone", "noselect" }
 -- TODO: Move the following lines out of the main config file
 
 -- Code highlight in markdown files
-g.markdown_fenced_languages = { "rust", "go", "typescript", "javascript", "python", "sql", "css", "json" }
+g.markdown_fenced_languages = { "rust", "go", "typescript", "javascript", "python", "sql", "css", "json", "mermaid" }
 
 -- Enable typescript syntax highlight for svelte files
 g.vim_svelte_plugin_use_typescript = 1
