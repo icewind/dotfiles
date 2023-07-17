@@ -11,7 +11,7 @@ local g = vim.g
 set.hidden = true
 
 -- Language settings
--- Disabled it because it works pretty bad...
+-- Disabled it because it works pretty bad. Using cspell at the moment
 set.spell = false
 set.spelllang = { "en_us" }
 set.spellsuggest = "5"
@@ -29,22 +29,15 @@ vim.cmd([[
 	colorscheme everforest
 ]])
 
--- Remember the last cursor position
--- TODO: Port these to lua
-vim.cmd([[
-	filetype plugin indent on
-
-	augroup vim-remember-cursor-position
-		autocmd!
-		autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
-	augroup END
-]])
-
--- Always show signs column
+-- General UI settings
 set.signcolumn = "yes:1"
+set.shortmess:append({ W = true, I = true, c = true, C = true })
+set.showmode = false -- Dont show mode since we have a statusline
+set.wildmode = "longest:full,full" -- Command-line completion mode
+set.splitkeep = "screen"
 
 set.mouse = "a"
-set.clipboard = "unnamedplus"
+set.clipboard = "unnamedplus" -- Use system clipboard
 
 set.termguicolors = true
 set.number = true
@@ -68,6 +61,7 @@ set.expandtab = true
 set.wrap = false
 set.autoindent = true
 set.smarttab = true
+set.shiftround = true
 
 -- Search options
 set.hlsearch = true
@@ -75,30 +69,29 @@ set.incsearch = true
 set.smartcase = true
 set.ignorecase = true
 set.showmatch = true
+set.formatoptions = "jcroqlnt"
+set.grepformat = "%f:%l:%c:%m"
+set.grepprg = "rg --vimgrep"
 
 -- Disable swap files. No need because of version control systems
 g.nobackup = true
 g.noswapfile = true
 g.noundofile = true
 
+-- Popup menu
+set.pumblend = 10 -- Popup blend. Values from 0 to 100
+set.pumheight = 10 -- Maximum number of entries in a popup
+
+-- Session options
+set.sessionoptions = { "buffers", "curdir", "tabpages", "winsize" }
+
 -- Using treesitter to fold/unfold
 vim.wo.foldlevel = 20
 vim.wo.foldmethod = "expr"
 vim.wo.foldexpr = "nvim_treesitter#foldexpr()"
 
--- [[ Highlight on yank ]]
--- See `:help vim.highlight.on_yank()`
-local highlight_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
-vim.api.nvim_create_autocmd("TextYankPost", {
-	callback = function()
-		vim.highlight.on_yank()
-	end,
-	group = highlight_group,
-	pattern = "*",
-})
-
 -- Autocompletion
-set.completeopt = { "menuone", "noselect" }
+set.completeopt = { "menu", "menuone", "noselect" }
 
 -- TODO: Move the following lines out of the main config file
 
@@ -122,7 +115,3 @@ g["db_ui_save_location"] = "~/Projects/SQLPad"
 -- Markdown preview theme.
 -- Better to see mermaid diagrams contrast before exporting them to Confluence
 g.mkdp_theme = "light"
-
-vim.cmd(
-	[[autocmd FileType sql,mysql,plsql lua require('cmp').setup.buffer({sources={{name='vim-dadbod-completion'}}})]]
-)

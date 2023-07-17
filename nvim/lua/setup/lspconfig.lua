@@ -1,4 +1,5 @@
 -- LSP Configuration
+-- cSpell:disable
 require("mason").setup()
 
 -- Improve lua development
@@ -17,7 +18,7 @@ local lsp_formatters_map = {
 	astro = "null-ls",
 }
 
--- to avoid the conflict we will select an appropriate server for specified file types
+-- Avoid the conflict we will select an appropriate server for specified file types
 local lsp_format = function(bufnr)
 	vim.lsp.buf.format({
 		filter = function(client)
@@ -28,17 +29,51 @@ local lsp_format = function(bufnr)
 	})
 end
 
+-- Check if the method is supported by any of the attached LSPs
+local supports = function(bufnr, action)
+	action = action:find("/") and action or "textDocument/" .. action
+	local clients = vim.lsp.get_active_clients({ bufnr = bufnr })
+	for _, client in ipairs(clients) do
+		if client.supports_method(action) then
+			return true
+		end
+	end
+	return false
+end
+
 local on_attach = function(client, bufnr)
-	local nmap = function(keys, func, desc)
+	local nmap = function(keys, func, desc, mode)
 		if desc then
 			desc = "LSP: " .. desc
 		end
-
-		vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc })
+		vim.keymap.set(mode or "n", keys, func, { buffer = bufnr, desc = desc })
 	end
 
+	-- Code actions
 	nmap("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
-	nmap("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
+	nmap("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction", { "v", "n" })
+	nmap("<leader>cA", function()
+		vim.lsp.buf.code_action({
+			context = {
+				only = {
+					"source",
+				},
+				diagnostics = {},
+			},
+		})
+	end, "Source [A]ction")
+
+	-- Formatting
+	nmap("<leader>cf", function()
+		lsp_format(bufnr)
+	end, "[C]ode [F]ormat")
+
+	-- For visual mode there might be a seprate range formatting action
+	if supports(bufnr, "rangeFormatting") then
+		nmap("<leader>cf", function()
+			lsp_format(bufnr)
+		end, "[C]ode [F]ormat [S]election", "v")
+	end
 
 	nmap("gd", vim.lsp.buf.definition, "[G]oto [D]efinition")
 	nmap("gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
