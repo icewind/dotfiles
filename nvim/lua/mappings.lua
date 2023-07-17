@@ -63,7 +63,7 @@ map("n", "<M-b>", ":NvimTreeToggle<CR>")
 
 -- Telescope
 
-vim.keymap.set("n", "<leader>?", require("telescope.builtin").oldfiles, { desc = "[?] Find recently opened files" })
+vim.keymap.set("n", "<leader>sr", require("telescope.builtin").oldfiles, { desc = "[?] Find recently opened files" })
 
 -- Replaced this one with hop. See if i need this
 -- vim.keymap.set("n", "<leader><space>", require("telescope.builtin").buffers, { desc = "[ ] Find existing buffers" })
