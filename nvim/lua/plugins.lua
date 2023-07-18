@@ -1,4 +1,5 @@
 -- Utils
+-- cSpell:disable
 local files_in_folder = require("utils").files_in_folder
 
 -- Install packer
@@ -54,6 +55,7 @@ require("packer").startup(function(use)
 	-- ---------------------------------------------------------------
 	-- Appearance
 	-- ---------------------------------------------------------------
+	-- Another great theme is https://github.com/catppuccin/nvim
 	use("sainnhe/everforest")
 
 	-- Better statusline
