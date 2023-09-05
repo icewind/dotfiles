@@ -117,15 +117,23 @@ end -- on_attach
 -- If some server requires more settings, load them only from a different file
 local language_servers = {
 	lua_ls = {
-		workspace = { checkThirdParty = false },
-		telemetry = { enable = false },
+		settings = {
+			workspace = { checkThirdParty = false },
+			telemetry = { enable = false },
+		},
 	},
 	ltex = {},
 	marksman = {},
 	pyright = {},
 	gopls = {},
 	rust_analyzer = {},
-	tsserver = {},
+	tsserver = {
+		init_options = {
+			preferences = {
+				disableSuggestions = true,
+			},
+		},
+	},
 	astro = {},
 	prismals = {},
 	svelte = {},
@@ -140,11 +148,10 @@ mason_lspconfig.setup({
 
 mason_lspconfig.setup_handlers({
 	function(server_name)
-		require("lspconfig")[server_name].setup({
+		require("lspconfig")[server_name].setup(vim.tbl_extend("keep", {
 			capabilities = capabilities,
 			on_attach = on_attach,
-			settings = { [server_name] = language_servers[server_name] },
-		})
+		}, language_servers[server_name]))
 	end,
 })
 
@@ -163,7 +170,10 @@ local null_ls = require("null-ls")
 null_ls.setup({
 	on_attach = on_attach,
 })
+
+-- TODO: null-ls got archived... Need to find a suitable replacement
 require("mason-null-ls").setup({
+	-- TODO: Cosider changing eslint_d to eslint-lsp (without mason-null-ls)
 	ensure_installed = { "stylua", "prettierd", "eslint_d", "cspell" },
 	handlers = {
 		prettierd = function()
