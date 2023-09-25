@@ -84,6 +84,11 @@ require("packer").startup(function(use)
 		config = get_config("telescope"),
 	})
 
+	use({
+		"nvim-telescope/telescope-file-browser.nvim",
+		requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
+	})
+
 	-- ---------------------------------------------------------------
 	-- LSP Configuration & Plugins
 	-- ---------------------------------------------------------------

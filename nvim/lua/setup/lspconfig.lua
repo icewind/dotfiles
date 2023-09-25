@@ -137,6 +137,7 @@ local language_servers = {
 	astro = {},
 	prismals = {},
 	svelte = {},
+	tailwindcss = {},
 }
 
 -- Ensure the servers above are installed
@@ -202,6 +203,7 @@ require("mason-null-ls").setup({
 						or utils.root_has_file(".prettierrc")
 						or utils.root_has_file(".prettierrc.json")
 						or utils.root_has_file(".prettierrc.js")
+						or utils.root_has_file(".prettier.config.cjs")
 				end,
 			}))
 		end,

@@ -100,10 +100,6 @@ g.markdown_fenced_languages = { "rust", "go", "typescript", "javascript", "pytho
 -- Enable typescript syntax highlight for svelte files
 g.vim_svelte_plugin_use_typescript = 1
 
--- Prettier format on save
-g["prettier#autoformat"] = 1
-g["prettier#autoformat_require_pragma"] = 0
-
 -- Rust analyzer format on save
 g["rustfmt_autosave"] = 1
 
