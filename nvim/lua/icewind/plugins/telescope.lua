@@ -38,7 +38,7 @@ return {
             { desc = "[?] Find recently opened files" }
         )
 
-        -- TODO: Remap S key for hop/flash and use this one for buffers select
+        -- TODO: Check if this one will be helpful to me
         -- vim.keymap.set("n", "<leader><space>", require("telescope.builtin").buffers, { desc = "[ ] Find existing buffers" })
 
         -- TODO: Check if this one will be helpful to me

@@ -19,7 +19,6 @@ map("n", "<S-l>", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer" })
 map("n", "[b", "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev buffer" })
 map("n", "]b", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer" })
 
--- TODO: Check if this one works correctly
 local haslazy, lazy = pcall(require, "lazy.core.config")
 if haslazy and lazy.spec.plugins["bufferline"] ~= nil then
     map("n", "<S-h>", "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev buffer" })
@@ -66,9 +65,6 @@ map("o", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev search result
 
 map("n", "<leader>xl", "<cmd>lopen<cr>", { desc = "Location List" })
 map("n", "<leader>xq", "<cmd>copen<cr>", { desc = "Quickfix List" })
-
--- Hop(EasyMotion) for normal and visual modes
-map({ "n", "v" }, "<leader><space>", "<cmd>lua require'hop'.hint_char1()<cr>")
 
 -- Filetree
 -- M is mapped to Cmd in iTerm2 preferences
