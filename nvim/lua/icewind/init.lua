@@ -18,6 +18,7 @@ require("lazy").setup({
     {
         { import = "icewind.plugins" },
         { import = "icewind.plugins.lsp" },
+        { import = "icewind.plugins.git" },
         { import = "icewind.plugins.colorschemes" },
     },
 })
