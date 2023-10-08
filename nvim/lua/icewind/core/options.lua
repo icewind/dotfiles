@@ -21,11 +21,11 @@ set.spelloptions = "camel"
 set.encoding = "utf-8"
 set.fileencoding = "utf-8"
 
--- Editor appearance
+-- Set the colorscheme
 vim.cmd([[
-	let g:everforest_background = 'medium'
-	let g:everforest_better_performance = 1
-	colorscheme everforest
+    let g:everforest_background = 'medium'
+    let g:everforest_better_performance = 1
+    colorscheme everforest
 ]])
 
 -- General UI settings

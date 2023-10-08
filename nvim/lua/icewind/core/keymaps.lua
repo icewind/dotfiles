@@ -1,9 +1,9 @@
 local function map(mode, lhs, rhs, opts)
-	local options = { noremap = true, silent = true }
-	if opts then
-		options = vim.tbl_extend("force", options, opts)
-	end
-	vim.keymap.set(mode, lhs, rhs, options)
+    local options = { noremap = true, silent = true }
+    if opts then
+        options = vim.tbl_extend("force", options, opts)
+    end
+    vim.keymap.set(mode, lhs, rhs, options)
 end
 
 vim.g.mapleader = " "
@@ -18,6 +18,20 @@ map("n", "<S-h>", "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev buffer" })
 map("n", "<S-l>", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer" })
 map("n", "[b", "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev buffer" })
 map("n", "]b", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer" })
+
+-- TODO: Check if this one works correctly
+local haslazy, lazy = pcall(require, "lazy.core.config")
+if haslazy and lazy.spec.plugins["bufferline"] ~= nil then
+    map("n", "<S-h>", "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev buffer" })
+    map("n", "<S-l>", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer" })
+    map("n", "[b", "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev buffer" })
+    map("n", "]b", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer" })
+else
+    map("n", "<S-h>", "<cmd>bprevious<cr>", { desc = "Prev buffer" })
+    map("n", "<S-l>", "<cmd>bnext<cr>", { desc = "Next buffer" })
+    map("n", "[b", "<cmd>bprevious<cr>", { desc = "Prev buffer" })
+    map("n", "]b", "<cmd>bnext<cr>", { desc = "Next buffer" })
+end
 
 -- Better window close
 map("n", "<leader>q", "<cmd>Bdelete!<CR>")
@@ -54,38 +68,11 @@ map("n", "<leader>xl", "<cmd>lopen<cr>", { desc = "Location List" })
 map("n", "<leader>xq", "<cmd>copen<cr>", { desc = "Quickfix List" })
 
 -- Hop(EasyMotion) for normal and visual modes
-map("n", "<leader><space>", "<cmd>lua require'hop'.hint_char1()<cr>")
-map("v", "<leader><space>", "<cmd>lua require'hop'.hint_char1()<cr>")
+map({ "n", "v" }, "<leader><space>", "<cmd>lua require'hop'.hint_char1()<cr>")
 
 -- Filetree
 -- M is mapped to Cmd in iTerm2 preferences
 map("n", "<M-b>", ":NvimTreeToggle<CR>")
-
--- Telescope
-
-vim.keymap.set("n", "<leader>sr", require("telescope.builtin").oldfiles, { desc = "[?] Find recently opened files" })
-
--- Replaced this one with hop. See if i need this
--- vim.keymap.set("n", "<leader><space>", require("telescope.builtin").buffers, { desc = "[ ] Find existing buffers" })
-
--- TODO: Check if this one will be helpful to me
-vim.keymap.set("n", "<leader>/", function()
-	-- You can pass additional configuration to telescope to change theme, layout, etc.
-	require("telescope.builtin").current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
-		winblend = 10,
-		previewer = false,
-	}))
-end, { desc = "[/] Fuzzily search in current buffer]" })
-
-map("n", "<leader>fb", require("telescope").extensions.file_browser.file_browser, { desc = "[F]ile [B]rowser" })
-
-vim.keymap.set("n", "<leader>sf", require("telescope.builtin").find_files, { desc = "[S]earch [F]iles" })
-vim.keymap.set("n", "<leader>sh", require("telescope.builtin").help_tags, { desc = "[S]earch [H]elp" })
-vim.keymap.set("n", "<leader>sw", require("telescope.builtin").grep_string, { desc = "[S]earch current [W]ord" })
-vim.keymap.set("n", "<leader>sg", require("telescope.builtin").live_grep, { desc = "[S]earch by [G]rep" })
-vim.keymap.set("n", "<leader>sd", require("telescope.builtin").diagnostics, { desc = "[S]earch [D]iagnostics" })
-
-vim.keymap.set("n", "<leader>gs", require("telescope.builtin").git_status, { desc = "[G]it [S]tatus" })
 
 -- Bufferline
 map("n", "<leader>b", ":BufferLinePick<cr>")
