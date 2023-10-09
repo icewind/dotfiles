@@ -3,12 +3,17 @@ return {
     event = { "BufReadPre", "BufNewFile" },
     build = ":TSUpdate",
     dependencies = {
+        "windwp/nvim-ts-autotag",
         "nvim-treesitter/nvim-treesitter-textobjects",
     },
     config = function()
         require("nvim-treesitter.configs").setup({
             -- Add languages to be installed here that you want installed for treesitter
             ensure_installed = { "go", "lua", "python", "rust", "typescript" },
+
+            autotag = {
+                enable = true,
+            },
 
             highlight = { enable = true },
             indent = { enable = true, disable = { "python" } },

@@ -17,10 +17,6 @@ set.spelllang = { "en_us" }
 set.spellsuggest = "5"
 set.spelloptions = "camel"
 
--- Encoding options
-set.encoding = "utf-8"
-set.fileencoding = "utf-8"
-
 -- Set the colorscheme
 vim.cmd([[
     let g:everforest_background = 'medium'
@@ -97,9 +93,6 @@ set.completeopt = { "menu", "menuone", "noselect" }
 
 -- Code highlight in markdown files
 g.markdown_fenced_languages = { "rust", "go", "typescript", "javascript", "python", "sql", "css", "json", "mermaid" }
-
--- Enable typescript syntax highlight for svelte files
-g.vim_svelte_plugin_use_typescript = 1
 
 -- Rust analyzer format on save
 g["rustfmt_autosave"] = 1
