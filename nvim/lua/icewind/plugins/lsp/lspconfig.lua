@@ -195,6 +195,13 @@ return {
             -- TODO: Cosider changing eslint_d to eslint-lsp (without mason-null-ls)
             ensure_installed = { "stylua", "prettierd", "eslint_d", "cspell" },
             handlers = {
+                cspell = function()
+                    null_ls.register(require("null-ls").builtins.diagnostics.cspell.with({
+                        condition = function(utils)
+                            return not utils.root_has_file(".cspell-ignore")
+                        end,
+                    }))
+                end,
                 prettierd = function()
                     null_ls.register(require("null-ls").builtins.formatting.prettierd.with({
                         filetypes = {
