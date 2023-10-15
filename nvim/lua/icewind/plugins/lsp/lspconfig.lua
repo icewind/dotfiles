@@ -22,7 +22,6 @@ local lsp_formatters_map = {
     -- These null-ls should use prettierd
     typescript = "null-ls",
     typescriptreact = "null-ls",
-    astro = "null-ls",
 }
 
 -- Avoid the conflict we will select an appropriate server for specified file types
