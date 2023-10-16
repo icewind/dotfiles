@@ -146,7 +146,6 @@ local language_servers = {
 return {
     "neovim/nvim-lspconfig",
     dependencies = {
-        "ray-x/lsp_signature.nvim",
         "williamboman/mason.nvim",
         "williamboman/mason-lspconfig.nvim",
         "nvimtools/none-ls.nvim",
