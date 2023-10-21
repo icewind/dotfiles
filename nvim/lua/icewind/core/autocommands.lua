@@ -77,3 +77,26 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
         vim.fn.mkdir(vim.fn.fnamemodify(file, ":p:h"), "p")
     end,
 })
+
+vim.api.nvim_create_autocmd("BufReadPost", {
+    desc = "Disable semantic highlight in lua files",
+    group = augroup("grey_out_lua_annotations"),
+    callback = function(opts)
+        -- In case it is @meta file meaning there are only type annotations,
+        -- it is ok to keep the highlight
+        if vim.bo[opts.buf].filetype ~= "lua" or opts.match:sub(-6) == ".d.lua" then
+            return
+        end
+        vim.api.nvim_create_autocmd("LspTokenUpdate", {
+            callback = function(args)
+                local token = args.data.token
+                local starts_with = vim.api.nvim_buf_get_text(args.buf, token.line, 0, token.line, 2, {})[1]
+                -- Check if this line is started from a comment
+                if starts_with ~= "--" then
+                    return
+                end
+                vim.lsp.semantic_tokens.highlight_token(token, args.buf, args.data.client_id, "Comment")
+            end,
+        })
+    end,
+})
