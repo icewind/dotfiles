@@ -140,6 +140,7 @@ local language_servers = {
         },
     },
     svelte = {},
+    astro = {},
     tailwindcss = {},
 }
 
@@ -189,12 +190,18 @@ return {
         })
 
         -- TODO: null-ls got archived... Need to find a suitable replacement
+        ---@diagnostic disable-next-line: missing-fields
         require("mason-null-ls").setup({
             -- TODO: Cosider changing eslint_d to eslint-lsp (without mason-null-ls)
             ensure_installed = { "stylua", "prettierd", "eslint_d", "cspell" },
             handlers = {
                 cspell = function()
                     null_ls.register(require("null-ls").builtins.diagnostics.cspell.with({
+                        condition = function(utils)
+                            return not utils.root_has_file(".cspell-ignore")
+                        end,
+                    }))
+                    null_ls.register(require("null-ls").builtins.code_actions.cspell.with({
                         condition = function(utils)
                             return not utils.root_has_file(".cspell-ignore")
                         end,
