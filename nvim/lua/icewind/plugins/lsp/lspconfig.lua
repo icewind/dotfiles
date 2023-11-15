@@ -234,6 +234,8 @@ return {
                                 or utils.root_has_file(".prettierrc.json")
                                 or utils.root_has_file(".prettierrc.js")
                                 or utils.root_has_file(".prettier.config.cjs")
+                                or utils.root_has_file(".prettier.config.js")
+                                or utils.root_has_file(".prettier.config.ts")
                         end,
                     }))
                 end,
