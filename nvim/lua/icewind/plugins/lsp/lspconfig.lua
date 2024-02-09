@@ -151,12 +151,15 @@ return {
         "williamboman/mason-lspconfig.nvim",
         "nvimtools/none-ls.nvim",
         "jay-babu/mason-null-ls.nvim",
+        "j-hui/fidget.nvim",
         "folke/neodev.nvim",
     },
     config = function()
         require("mason").setup()
 
         require("neodev").setup()
+
+        require("fidget").setup()
 
         local capabilities = vim.lsp.protocol.make_client_capabilities()
         capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)

@@ -26,8 +26,20 @@ return {
                     luasnip.lsp_expand(args.body)
                 end,
             },
+            ---@diagnostic disable-next-line: missing-fields
             formatting = {
-                format = require("lspkind").cmp_format(),
+                fields = { "kind", "abbr", "menu" },
+                expandable_indicator = false,
+                format = require("lspkind").cmp_format({
+                    mode = "symbol",
+                    maxwidth = 30,
+                    before = function(_, item)
+                        if item and item.menu and string.len(item.menu) >= 33 then
+                            item.menu = string.sub(item.menu, 0, 30) .. "..."
+                        end
+                        return item
+                    end,
+                }),
             },
             mapping = {
                 ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
