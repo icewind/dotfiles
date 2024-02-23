@@ -27,6 +27,11 @@ return {
                     treesitter = false,
                 },
                 path_display = { "smart" },
+                mappings = {
+                    i = {
+                        ["<c-d>"] = require("telescope.actions").delete_buffer,
+                    },
+                },
             },
         })
 
@@ -39,7 +44,12 @@ return {
         )
 
         -- TODO: Check if this one will be helpful to me
-        -- vim.keymap.set("n", "<leader><space>", require("telescope.builtin").buffers, { desc = "[ ] Find existing buffers" })
+        vim.keymap.set(
+            "n",
+            "<leader><space>",
+            require("telescope.builtin").buffers,
+            { desc = "[ ] Find existing buffers" }
+        )
 
         -- TODO: Check if this one will be helpful to me
         vim.keymap.set("n", "<leader>/", function()
