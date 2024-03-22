@@ -74,7 +74,7 @@ local on_attach = function(client, bufnr)
         lsp_format(bufnr)
     end, "[C]ode [F]ormat")
 
-    -- For visual mode there might be a seprate range formatting action
+    -- For visual mode there might be a separate range formatting action
     if supports(bufnr, "rangeFormatting") then
         nmap("<leader>cf", function()
             lsp_format(bufnr)
@@ -85,8 +85,8 @@ local on_attach = function(client, bufnr)
     nmap("gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
     nmap("gI", vim.lsp.buf.implementation, "[G]oto [I]mplementation")
     nmap("<leader>D", vim.lsp.buf.type_definition, "Type [D]efinition")
-    nmap("<leader>ds", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
-    nmap("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
+    nmap("<leader>ds", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]symbols")
+    nmap("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]symbols")
 
     -- See `:help K` for why this keymap
     nmap("K", vim.lsp.buf.hover, "Hover Documentation")
@@ -142,6 +142,7 @@ local language_servers = {
     svelte = {},
     astro = {},
     tailwindcss = {},
+    eslint = {},
 }
 
 return {
@@ -150,6 +151,7 @@ return {
         "williamboman/mason.nvim",
         "williamboman/mason-lspconfig.nvim",
         "nvimtools/none-ls.nvim",
+        "davidmh/cspell.nvim",
         "jay-babu/mason-null-ls.nvim",
         "j-hui/fidget.nvim",
         "folke/neodev.nvim",
@@ -195,16 +197,16 @@ return {
         -- TODO: null-ls got archived... Need to find a suitable replacement
         ---@diagnostic disable-next-line: missing-fields
         require("mason-null-ls").setup({
-            -- TODO: Cosider changing eslint_d to eslint-lsp (without mason-null-ls)
-            ensure_installed = { "stylua", "prettierd", "eslint_d", "cspell" },
+            ensure_installed = { "stylua", "prettierd" },
             handlers = {
                 cspell = function()
-                    null_ls.register(require("null-ls").builtins.diagnostics.cspell.with({
+                    local cspell = require("cspell")
+                    null_ls.register(cspell.diagnostics.with({
                         condition = function(utils)
                             return not utils.root_has_file(".cspell-ignore")
                         end,
                     }))
-                    null_ls.register(require("null-ls").builtins.code_actions.cspell.with({
+                    null_ls.register(cspell.code_actions.with({
                         condition = function(utils)
                             return not utils.root_has_file(".cspell-ignore")
                         end,
@@ -236,13 +238,6 @@ return {
                                 or utils.root_has_file(".prettierrc")
                                 or utils.root_has_file(".prettierrc.json")
                                 or utils.root_has_file(".prettierrc.js")
-                        end,
-                    }))
-                end,
-                eslint_d = function()
-                    null_ls.register(require("null-ls").builtins.diagnostics.eslint_d.with({
-                        condition = function(utils)
-                            return utils.root_has_file(".eslintrc.json") or utils.root_has_file(".eslintrc.js")
                         end,
                     }))
                 end,
