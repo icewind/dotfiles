@@ -127,7 +127,9 @@ local language_servers = {
             telemetry = { enable = false },
         },
     },
-    ltex = {},
+    ltex = {
+        filetypes = { "markdown", "org", "restructuredtext" },
+    },
     marksman = {},
     pyright = {},
     gopls = {},
@@ -194,7 +196,6 @@ return {
             on_attach = on_attach,
         })
 
-        -- TODO: null-ls got archived... Need to find a suitable replacement
         ---@diagnostic disable-next-line: missing-fields
         require("mason-null-ls").setup({
             ensure_installed = { "stylua", "prettierd" },
