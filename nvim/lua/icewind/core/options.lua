@@ -10,10 +10,12 @@ local g = vim.g
 
 set.hidden = true
 
+-- UI language
+
 -- Language settings
 -- Disabled it because it works pretty bad. Using cspell at the moment
 set.spell = false
-set.spelllang = { "en_us" }
+set.spelllang = { "en_US" }
 set.spellsuggest = "5"
 set.spelloptions = "camel"
 
