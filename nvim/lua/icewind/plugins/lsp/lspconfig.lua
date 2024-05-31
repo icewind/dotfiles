@@ -81,10 +81,10 @@ local on_attach = function(client, bufnr)
         end, "[C]ode [F]ormat [S]election", "v")
     end
 
-    nmap("gd", vim.lsp.buf.definition, "[G]oto [D]efinition")
+    nmap("gd", vim.lsp.buf.definition, "[G]oto [D]definition")
     nmap("gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
     nmap("gI", vim.lsp.buf.implementation, "[G]oto [I]mplementation")
-    nmap("<leader>D", vim.lsp.buf.type_definition, "Type [D]efinition")
+    nmap("<leader>D", vim.lsp.buf.type_definition, "Type [D]definition")
     nmap("<leader>ds", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]symbols")
     nmap("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]symbols")
 
@@ -153,7 +153,7 @@ return {
         "williamboman/mason.nvim",
         "williamboman/mason-lspconfig.nvim",
         "nvimtools/none-ls.nvim",
-        "davidmh/cspell.nvim",
+        -- "davidmh/cspell.nvim",
         "jay-babu/mason-null-ls.nvim",
         "j-hui/fidget.nvim",
         "folke/neodev.nvim",
@@ -200,19 +200,19 @@ return {
         require("mason-null-ls").setup({
             ensure_installed = { "stylua", "prettierd" },
             handlers = {
-                cspell = function()
-                    local cspell = require("cspell")
-                    null_ls.register(cspell.diagnostics.with({
-                        condition = function(utils)
-                            return not utils.root_has_file(".cspell-ignore")
-                        end,
-                    }))
-                    null_ls.register(cspell.code_actions.with({
-                        condition = function(utils)
-                            return not utils.root_has_file(".cspell-ignore")
-                        end,
-                    }))
-                end,
+                -- cspell = function()
+                --     local cspell = require("cspell")
+                --     null_ls.register(cspell.diagnostics.with({
+                --         condition = function(utils)
+                --             return not utils.root_has_file(".cspell-ignore")
+                --         end,
+                --     }))
+                --     null_ls.register(cspell.code_actions.with({
+                --         condition = function(utils)
+                --             return not utils.root_has_file(".cspell-ignore")
+                --         end,
+                --     }))
+                -- end,
                 prettierd = function()
                     null_ls.register(require("null-ls").builtins.formatting.prettierd.with({
                         filetypes = {
