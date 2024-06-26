@@ -26,7 +26,7 @@ vim.cmd([[
     let g:everforest_disable_italic_comment = 1
     colorscheme everforest
 ]])
--- vim.cmd.colorscheme("catppuccin-frappe")
+-- vim.cmd.colorscheme("kanagawa-dragon")
 
 -- General UI settings
 set.signcolumn = "yes:1"
