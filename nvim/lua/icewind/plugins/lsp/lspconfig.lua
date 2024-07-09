@@ -145,6 +145,7 @@ local language_servers = {
     astro = {},
     tailwindcss = {},
     eslint = {},
+    ruff = {},
 }
 
 return {
@@ -200,19 +201,6 @@ return {
         require("mason-null-ls").setup({
             ensure_installed = { "stylua", "prettierd" },
             handlers = {
-                -- cspell = function()
-                --     local cspell = require("cspell")
-                --     null_ls.register(cspell.diagnostics.with({
-                --         condition = function(utils)
-                --             return not utils.root_has_file(".cspell-ignore")
-                --         end,
-                --     }))
-                --     null_ls.register(cspell.code_actions.with({
-                --         condition = function(utils)
-                --             return not utils.root_has_file(".cspell-ignore")
-                --         end,
-                --     }))
-                -- end,
                 prettierd = function()
                     null_ls.register(require("null-ls").builtins.formatting.prettierd.with({
                         filetypes = {
