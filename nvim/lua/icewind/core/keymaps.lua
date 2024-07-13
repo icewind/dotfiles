@@ -64,7 +64,7 @@ map("n", "<leader>xq", "<cmd>copen<cr>", { desc = "Quickfix List" })
 
 -- Filetree
 -- M is mapped to Cmd in iTerm2 preferences
-map("n", "<M-b>", ":NvimTreeToggle<CR>")
+map("n", "<leader>ee", ":NvimTreeToggle<CR>")
 
 -- Bufferline
 map("n", "<leader>b", ":BufferLinePick<cr>")
