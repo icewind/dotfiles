@@ -20,13 +20,7 @@ set.spellsuggest = "5"
 set.spelloptions = "camel"
 
 -- Set the colorscheme
-vim.cmd([[
-    let g:everforest_background = 'medium'
-    let g:everforest_better_performance = 1
-    let g:everforest_disable_italic_comment = 1
-    colorscheme everforest
-]])
--- vim.cmd.colorscheme("kanagawa-dragon")
+vim.cmd.colorscheme("everforest")
 
 -- General UI settings
 set.signcolumn = "yes:1"
