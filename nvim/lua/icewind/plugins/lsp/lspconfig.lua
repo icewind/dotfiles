@@ -131,8 +131,9 @@ local language_servers = {
         filetypes = { "markdown", "org", "restructuredtext" },
     },
     marksman = {},
-    pyright = {},
-    gopls = {},
+    -- pyright = {},
+    -- ruff = {},
+    -- gopls = {},
     rust_analyzer = {},
     tsserver = {
         init_options = {
@@ -145,7 +146,6 @@ local language_servers = {
     astro = {},
     tailwindcss = {},
     eslint = {},
-    ruff = {},
 }
 
 return {
