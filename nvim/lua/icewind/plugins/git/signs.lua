@@ -5,13 +5,6 @@ return {
         require("gitsigns").setup({
             numhl = true,
             signcolumn = true,
-            signs = {
-                add = { hl = "GitGutterAdd", text = "+" },
-                change = { hl = "GitGutterChange", text = "~" },
-                delete = { hl = "GitGutterDelete", text = "_" },
-                topdelete = { hl = "GitGutterDelete", text = "‾" },
-                changedelete = { hl = "GitGutterChange", text = "~" },
-            },
             on_attach = function(bufnr)
                 local function map(mode, lhs, rhs, opts)
                     opts = vim.tbl_extend("force", { noremap = true, silent = true }, opts or {})
