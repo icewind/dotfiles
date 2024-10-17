@@ -1,3 +1,4 @@
+local constants = require("icewind.core.constants")
 --------------------------------------------------------------------------------
 -- Global editor options
 --
@@ -20,7 +21,7 @@ set.spellsuggest = "5"
 set.spelloptions = "camel"
 
 -- Set the colorscheme
-vim.cmd.colorscheme("everforest")
+vim.cmd.colorscheme(constants.color_scheme)
 
 -- General UI settings
 set.signcolumn = "yes:1"
