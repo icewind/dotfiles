@@ -6,7 +6,7 @@ local is_windows <const> = wezterm.target_triple:find("windows") ~= nil
 local is_macos <const> = wezterm.target_triple:find("darwin") ~= nil
 
 if is_windows then
-	config.default_prog = { "pwsh.exe" }
+	config.default_prog = { "pwsh.exe", "-NoLogo" }
 end
 
 -- Appearance
