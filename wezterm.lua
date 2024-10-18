@@ -20,10 +20,20 @@ config.use_fancy_tab_bar = true
 
 config.leader = { key = "a", mods = "CTRL", timeout_milliseconds = 1500 }
 
-config.keys = { {
-	key = "x",
-	mods = "CTRL|SHIFT",
-	action = wezterm.action.CloseCurrentPane({ confirm = false }),
-} }
+config.keys = {
+	{
+		key = "x",
+		mods = "CTRL|SHIFT",
+		action = wezterm.action.CloseCurrentPane({ confirm = false }),
+	},
+	{
+		key = "k",
+		mods = "CTRL|SHIFT",
+		action = wezterm.action.Multiple({
+			wezterm.action.ClearScrollback("ScrollbackAndViewport"),
+			wezterm.action.SendKey({ key = "L", mods = "CTRL" }),
+		}),
+	},
+}
 
 return config
