@@ -122,18 +122,34 @@ local language_servers = {
     -- ruff = {},
     -- gopls = {},
     rust_analyzer = {},
-    ts_ls = {
-        init_options = {
-            preferences = {
-                disableSuggestions = true,
-            },
-        },
-    },
     svelte = {},
     astro = {},
     tailwindcss = {},
     eslint = {},
+    ts_ls = function(utils)
+        return {
+            init_options = {
+                preferences = {
+                    disableSuggestions = true,
+                },
+            },
+            root_dir = utils.root_pattern("project.json"),
+            single_file_support = false,
+        }
+    end,
+    denols = function(utils)
+        return {
+            root_dir = utils.root_pattern("deno.json", "deno.jsonc"),
+        }
+    end,
 }
+
+local function get_config(source, util)
+    if type(source) == "function" then
+        return source(util)
+    end
+    return source
+end
 
 return {
     "neovim/nvim-lspconfig",
@@ -157,6 +173,7 @@ return {
         capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
         local mason_lspconfig = require("mason-lspconfig")
+        local lspconfig = require("lspconfig")
 
         mason_lspconfig.setup({
             ensure_installed = vim.tbl_keys(language_servers),
@@ -164,10 +181,10 @@ return {
 
         mason_lspconfig.setup_handlers({
             function(server_name)
-                require("lspconfig")[server_name].setup(vim.tbl_extend("keep", {
+                lspconfig[server_name].setup(vim.tbl_extend("keep", {
                     capabilities = capabilities,
                     on_attach = on_attach,
-                }, language_servers[server_name]))
+                }, get_config(language_servers[server_name], lspconfig.util)))
             end,
         })
 
