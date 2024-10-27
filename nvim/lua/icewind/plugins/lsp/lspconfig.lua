@@ -1,16 +1,3 @@
--- Custom diagnostics signs. Requires one of the nerd-fonts
-local signs = {
-    Error = "ﰸ",
-    Warn = "",
-    Hint = "",
-    Info = "",
-}
-
-for type, icon in pairs(signs) do
-    local hl = "DiagnosticSign" .. type
-    vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = nil })
-end
-
 -- make popups more aestetic
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
     border = "rounded",

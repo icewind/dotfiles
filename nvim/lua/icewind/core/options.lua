@@ -92,9 +92,6 @@ set.completeopt = { "menu", "menuone", "noselect" }
 -- Code highlight in markdown files
 g.markdown_fenced_languages = { "rust", "go", "typescript", "javascript", "python", "sql", "css", "json", "mermaid" }
 
--- Rust analyzer format on save
-g["rustfmt_autosave"] = 1
-
 -- Databases
 g["db_ui_use_nerd_fonts"] = 1
 g["db_ui_save_location"] = "~/Projects/SQLPad"
@@ -102,3 +99,16 @@ g["db_ui_save_location"] = "~/Projects/SQLPad"
 -- Markdown preview theme.
 -- Better to see mermaid diagrams contrast before exporting them to Confluence
 g.mkdp_theme = "light"
+
+vim.diagnostic.config({
+    severity_short = true,
+    signs = {
+        text = {
+            -- They will be draws in different colors
+            [vim.diagnostic.severity.ERROR] = "●",
+            [vim.diagnostic.severity.WARN] = "●",
+            [vim.diagnostic.severity.INFO] = "●",
+            [vim.diagnostic.severity.HINT] = "●",
+        },
+    },
+})
