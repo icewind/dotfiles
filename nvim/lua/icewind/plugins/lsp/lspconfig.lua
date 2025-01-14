@@ -77,7 +77,7 @@ local on_attach = function(client, bufnr)
 
     -- See `:help K` for why this keymap
     nmap("K", vim.lsp.buf.hover, "Hover Documentation")
-    nmap("<C-k>", vim.lsp.buf.signature_help, "Signature Documentation")
+    nmap("<C-k>", vim.lsp.buf.signature_help, "Signature Documentation", "i")
 
     -- Lesser used LSP functionality
     nmap("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
@@ -134,7 +134,7 @@ local language_servers = {
                 },
             },
             root_dir = utils.root_pattern("project.json"),
-            single_file_support = false,
+            -- single_file_support = false,
         }
     end,
     denols = function(utils)
