@@ -137,11 +137,11 @@ local language_servers = {
             -- single_file_support = false,
         }
     end,
-    denols = function(utils)
-        return {
-            root_dir = utils.root_pattern("deno.json", "deno.jsonc"),
-        }
-    end,
+    -- denols = function(utils)
+    --     return {
+    --         root_dir = utils.root_pattern("deno.json", "deno.jsonc"),
+    --     }
+    -- end,
 }
 
 local function get_config(source, util)
