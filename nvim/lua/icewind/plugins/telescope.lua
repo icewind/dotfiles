@@ -5,12 +5,23 @@ return {
         "nvim-lua/plenary.nvim",
         "nvim-tree/nvim-web-devicons",
         "nvim-telescope/telescope-ui-select.nvim",
+        "nvim-telescope/telescope-live-grep-args.nvim",
     },
     config = function()
-        require("telescope").setup({
+        local telescope = require("telescope")
+        local lga_actions = require("telescope-live-grep-args.actions")
+        telescope.setup({
             extensions = {
                 ["ui-select"] = {
                     require("telescope.themes").get_dropdown({}),
+                },
+                ["live_grep_args"] = {
+                    auto_quoting = true,
+                    mappings = {
+                        i = {
+                            ["<C-a>"] = lga_actions.quote_prompt({ postfix = " --iglob " }),
+                        },
+                    },
                 },
             },
             defaults = {
@@ -30,10 +41,13 @@ return {
                 mappings = {
                     i = {
                         ["<c-d>"] = require("telescope.actions").delete_buffer,
+                        ["<c-f>"] = require("telescope.actions").to_fuzzy_refine,
                     },
                 },
             },
         })
+
+        telescope.load_extension("live_grep_args")
 
         -- Key mappings
         vim.keymap.set(
@@ -68,7 +82,12 @@ return {
             require("telescope.builtin").grep_string,
             { desc = "[S]earch current [W]ord" }
         )
-        vim.keymap.set("n", "<leader>sg", require("telescope.builtin").live_grep, { desc = "[S]earch by [G]rep" })
+        vim.keymap.set(
+            "n",
+            "<leader>sg",
+            require("telescope").extensions.live_grep_args.live_grep_args,
+            { desc = "[S]earch by [G]rep" }
+        )
         vim.keymap.set("n", "<leader>sd", require("telescope.builtin").diagnostics, { desc = "[S]earch [D]iagnostics" })
 
         vim.keymap.set("n", "<leader>gs", require("telescope.builtin").git_status, { desc = "[G]it [S]tatus" })
