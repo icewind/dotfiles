@@ -9,5 +9,7 @@ return {
         neogit.setup({
             kind = "split",
         })
+
+        vim.keymap.set("n", "<leader>ng", ":Neogit<CR>", { desc = "[N]eo[G]it" })
     end,
 }
