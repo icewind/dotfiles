@@ -25,6 +25,7 @@ vim.cmd.colorscheme(constants.color_scheme)
 
 -- General UI settings
 set.signcolumn = "yes:1"
+set.fillchars = { eob = " " }
 set.shortmess:append({ W = true, I = true, c = true, C = true })
 set.showmode = false -- Dont show mode since we have a statusline
 set.wildmode = "longest:full,full" -- Command-line completion mode

@@ -25,7 +25,7 @@ end
 -- Check if the method is supported by any of the attached LSPs
 local supports = function(bufnr, action)
     action = action:find("/") and action or "textDocument/" .. action
-    local clients = vim.lsp.get_active_clients({ bufnr = bufnr })
+    local clients = vim.lsp.get_clients({ bufnr = bufnr })
     for _, client in ipairs(clients) do
         if client.supports_method(action) then
             return true
