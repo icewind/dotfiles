@@ -105,7 +105,7 @@ vim.diagnostic.config({
     severity_short = true,
     signs = {
         text = {
-            -- They will be draws in different colors
+            -- They will be drawn in different colors
             [vim.diagnostic.severity.ERROR] = "●",
             [vim.diagnostic.severity.WARN] = "●",
             [vim.diagnostic.severity.INFO] = "●",
