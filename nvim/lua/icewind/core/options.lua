@@ -74,8 +74,12 @@ g.noswapfile = true
 g.noundofile = true
 
 -- Popup menu
-set.pumblend = 10 -- Popup blend. Values from 0 to 100
+set.pumblend = 0 -- Popup blend. Values from 0 to 100
 set.pumheight = 10 -- Maximum number of entries in a popup
+
+-- No need to set specific color for floating windows, I use rounded border for them
+vim.api.nvim_set_hl(0, "NormalFloat", {})
+vim.api.nvim_set_hl(0, "FloatBorder", {})
 
 -- Session options
 set.sessionoptions = { "buffers", "curdir", "tabpages", "winsize" }

@@ -1,8 +1,3 @@
--- make popups more aestetic
-vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-    border = "rounded",
-})
-
 -- Use specific language servers to format specific files
 local lsp_formatters_map = {
     lua = "null-ls",
@@ -75,8 +70,11 @@ local on_attach = function(client, bufnr)
     nmap("<leader>ds", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]symbols")
     nmap("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]symbols")
 
-    -- See `:help K` for why this keymap
-    nmap("K", vim.lsp.buf.hover, "Hover Documentation")
+    nmap("K", function()
+        vim.lsp.buf.hover({
+            border = "rounded",
+        })
+    end, "Hover Documentation")
 
     -- Lesser used LSP functionality
     nmap("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
