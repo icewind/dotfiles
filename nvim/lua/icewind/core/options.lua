@@ -30,6 +30,7 @@ set.shortmess:append({ W = true, I = true, c = true, C = true })
 set.showmode = false -- Dont show mode since we have a statusline
 set.wildmode = "longest:full,full" -- Command-line completion mode
 set.splitkeep = "screen"
+vim.o.winborder = "none" -- Lots of plugins are getting crazy with this one enabled
 
 set.mouse = "a"
 set.clipboard = "unnamedplus" -- Use system clipboard

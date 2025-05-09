@@ -1,5 +1,6 @@
 return {
     "icewind/floatnotes.nvim",
+    event = "VeryLazy",
     opts = {},
     config = function()
         require("floatnotes").setup({
