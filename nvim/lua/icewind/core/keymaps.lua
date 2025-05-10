@@ -79,7 +79,9 @@ map("n", "<leader>8", "<Cmd>BufferLineGoToBuffer 8<CR>")
 map("n", "<leader>9", "<Cmd>BufferLineGoToBuffer 9<CR>")
 
 -- Display diagnostics messages
-map("n", "<leader>e", "<cmd>lua vim.diagnostic.open_float()<cr>", { desc = "Show diagnostic message in float window" })
+map("n", "<leader>e", "<cmd>lua vim.diagnostic.open_float({ border = 'rounded' })<CR>", {
+    desc = "Show diagnostic message in float window",
+})
 map("n", "<leader>xx", "<cmd>Trouble<cr>", { desc = "Diagnostics" })
 map("n", "<leader>xw", "<cmd>Trouble workspace_diagnostics<cr>", { desc = "Workspace Diagnostics" })
 map("n", "<leader>xd", "<cmd>Trouble document_diagnostics<cr>", { desc = "Document diagnostics" })
