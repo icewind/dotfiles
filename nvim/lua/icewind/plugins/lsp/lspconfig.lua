@@ -13,7 +13,7 @@ end
 --- Lsp-specific key mapping
 --- @param bufnr number
 --- @param keys string
---- @param func function
+--- @param func function | string
 --- @param opts { mode?: string | table, has?: string, desc?: string, nowait?: boolean }
 local mapkey = function(bufnr, keys, func, opts)
     if opts.desc then
@@ -57,6 +57,7 @@ local map_keys_for_lsp = function(bufnr)
             },
         })
     end, { mode = { "n", "v" }, desc = "Global code actions" })
+    mapkey(bufnr, "gr", "<cmd>Telescope lsp_references<cr>", { desc = "References", nowait = true })
     mapkey(bufnr, "gd", vim.lsp.buf.definition, {
         desc = "Go to definition",
         has = "definition",
@@ -83,6 +84,8 @@ local map_keys_for_lsp = function(bufnr)
         desc = "Format selected text",
         has = "rangeFormatting",
     })
+    mapkey(bufnr, "<leader>ds", "<cmd>Telescope lsp_document_symbols<cr>", { desc = "Document symbols" })
+    mapkey(bufnr, "<leader>ws", "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", { desc = "Workspace symbols" })
 end
 
 return {
