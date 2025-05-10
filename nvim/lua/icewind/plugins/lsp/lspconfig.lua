@@ -1,3 +1,20 @@
+-- Use specific language servers to format specific files
+local lsp_formatters_map = {
+    -- These null-ls should use prettierd
+    typescript = "null-ls",
+    typescriptreact = "null-ls",
+}
+
+local format_with_lsp = function(bufnr)
+    vim.lsp.buf.format({
+        filter = function(client)
+            local buffer_type = vim.api.nvim_buf_get_option(bufnr, "filetype")
+            return lsp_formatters_map[buffer_type] == nil or lsp_formatters_map[buffer_type] == client.name
+        end,
+        bufnr = bufnr,
+    })
+end
+
 -- Check if the method is supported by any of the attached LSPs
 local supports = function(bufnr, action)
     action = action:find("/") and action or "textDocument/" .. action
@@ -78,14 +95,43 @@ local map_keys_for_lsp = function(bufnr)
         has = "codeLens",
         desc = "Refresh & Display Codelens",
     })
-    mapkey(bufnr, "<leader>cf", vim.lsp.buf.format, { desc = "Format the file", has = "formatting" })
-    mapkey(bufnr, "<leader>cf", vim.lsp.buf.format, {
+
+    mapkey(bufnr, "<leader>cf", function() format_with_lsp(bufnr) end, {
+        desc = "Format the file",
+        has = "formatting",
+    })
+
+    mapkey(bufnr, "<leader>cf", function() format_with_lsp(bufnr) end, {
         mode = "v",
         desc = "Format selected text",
         has = "rangeFormatting",
     })
+
     mapkey(bufnr, "<leader>ds", "<cmd>Telescope lsp_document_symbols<cr>", { desc = "Document symbols" })
     mapkey(bufnr, "<leader>ws", "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", { desc = "Workspace symbols" })
+end
+
+local setup_none_ls = function()
+    local null_ls = require("null-ls")
+    null_ls.setup({
+        should_attach = function(bufnr)
+            return not vim.api.nvim_buf_get_name(bufnr):match("^git://")
+        end,
+        sources = {
+            null_ls.builtins.formatting.prettierd.with({
+                filetypes = {
+                    "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "css",
+                    "scss", "less", "html", "json", "jsonc", "yaml", "markdown", "markdown.mdx",
+                    "graphql", "handlebars", "astro",
+                },
+                condition = function(utils)
+                    return utils.root_has_file(".prettierrc")
+                        or utils.root_has_file(".prettierrc.json")
+                        or utils.root_has_file(".prettierrc.js")
+                end,
+            })
+        }
+    });
 end
 
 return {
@@ -94,6 +140,7 @@ return {
         "mason-org/mason.nvim",
         "mason-org/mason-lspconfig.nvim",
         "j-hui/fidget.nvim",
+        "nvimtools/none-ls.nvim",
     },
     config = function()
         vim.lsp.config("*", {
@@ -110,7 +157,7 @@ return {
                         group = vim.api.nvim_create_augroup("lsp-format-on-save", { clear = true }),
                         buffer = event.buf,
                         callback = function()
-                            vim.lsp.buf.format()
+                            format_with_lsp(event.buf)
                         end,
                     })
                 end
@@ -122,5 +169,7 @@ return {
         require("mason-lspconfig").setup({
             ensure_installed = vim.tbl_values(language_servers)
         })
+
+        setup_none_ls()
     end
 }
