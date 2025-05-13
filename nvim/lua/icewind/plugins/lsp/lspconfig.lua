@@ -63,6 +63,8 @@ local language_servers = {
 local map_keys_for_lsp = function(bufnr)
     mapkey(bufnr, "K", function() return vim.lsp.buf.hover({ border = "rounded" }) end, { desc = "Hover docs" })
     mapkey(bufnr, "<c-k>", function() return vim.lsp.buf.signature_help() end, { mode = "i", desc = "Signature help" })
+
+    -- Map only if this is not a part of DiffView tabpage
     mapkey(bufnr, "<leader>ca", vim.lsp.buf.code_action, { mode = { "n", "v" }, has = "codeAction" })
     mapkey(bufnr, "<leader>cA", function()
         vim.lsp.buf.code_action({
@@ -74,19 +76,7 @@ local map_keys_for_lsp = function(bufnr)
             },
         })
     end, { mode = { "n", "v" }, desc = "Global code actions" })
-    mapkey(bufnr, "gr", "<cmd>Telescope lsp_references<cr>", { desc = "References", nowait = true })
-    mapkey(bufnr, "gd", vim.lsp.buf.definition, {
-        desc = "Go to definition",
-        has = "definition",
-    })
-    mapkey(bufnr, "gD", vim.lsp.buf.declaration, {
-        desc = "Go to declaration",
-        has = "declaration"
-    })
-    mapkey(bufnr, "<leader>rn", vim.lsp.buf.rename, {
-        has = "rename",
-        desc = "Rename symbol",
-    })
+
     mapkey(bufnr, "<leader>cc", vim.lsp.codelens.run, {
         has = "codeLens",
         desc = "Display Codelens",
@@ -105,6 +95,20 @@ local map_keys_for_lsp = function(bufnr)
         mode = "v",
         desc = "Format selected text",
         has = "rangeFormatting",
+    })
+
+    mapkey(bufnr, "gr", "<cmd>Telescope lsp_references<cr>", { desc = "References", nowait = true })
+    mapkey(bufnr, "gd", vim.lsp.buf.definition, {
+        desc = "Go to definition",
+        has = "definition",
+    })
+    mapkey(bufnr, "gD", vim.lsp.buf.declaration, {
+        desc = "Go to declaration",
+        has = "declaration"
+    })
+    mapkey(bufnr, "<leader>rn", vim.lsp.buf.rename, {
+        has = "rename",
+        desc = "Rename symbol",
     })
 
     mapkey(bufnr, "<leader>ds", "<cmd>Telescope lsp_document_symbols<cr>", { desc = "Document symbols" })
