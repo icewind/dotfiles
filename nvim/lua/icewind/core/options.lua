@@ -25,10 +25,12 @@ vim.cmd.colorscheme(constants.color_scheme)
 
 -- General UI settings
 set.signcolumn = "yes:1"
+set.fillchars = { eob = " " }
 set.shortmess:append({ W = true, I = true, c = true, C = true })
-set.showmode = false -- Dont show mode since we have a statusline
+set.showmode = false               -- Dont show mode since we have a statusline
 set.wildmode = "longest:full,full" -- Command-line completion mode
 set.splitkeep = "screen"
+vim.o.winborder = "none"           -- Lots of plugins are getting crazy with this one enabled
 
 set.mouse = "a"
 set.clipboard = "unnamedplus" -- Use system clipboard
@@ -73,8 +75,12 @@ g.noswapfile = true
 g.noundofile = true
 
 -- Popup menu
-set.pumblend = 10 -- Popup blend. Values from 0 to 100
+set.pumblend = 0   -- Popup blend. Values from 0 to 100
 set.pumheight = 10 -- Maximum number of entries in a popup
+
+-- No need to set specific color for floating windows, I use rounded border for them
+vim.api.nvim_set_hl(0, "NormalFloat", {})
+vim.api.nvim_set_hl(0, "FloatBorder", {})
 
 -- Session options
 set.sessionoptions = { "buffers", "curdir", "tabpages", "winsize" }
@@ -101,10 +107,13 @@ g["db_ui_save_location"] = "~/Projects/SQLPad"
 g.mkdp_theme = "light"
 
 vim.diagnostic.config({
+    float = {
+        border = "rounded"
+    },
     severity_short = true,
     signs = {
         text = {
-            -- They will be draws in different colors
+            -- They will be drawn in different colors
             [vim.diagnostic.severity.ERROR] = "●",
             [vim.diagnostic.severity.WARN] = "●",
             [vim.diagnostic.severity.INFO] = "●",

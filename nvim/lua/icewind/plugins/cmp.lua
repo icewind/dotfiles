@@ -61,8 +61,14 @@ return {
                 { name = "buffer", keyword_length = 5 },
             },
             window = {
-                completion = cmp.config.window.bordered(),
-                documentation = cmp.config.window.bordered(),
+                completion = {
+                    winhighlight = "Normal:Normal,FloatBorder:CmpCompletionBorder,CursorLine:Pmenu",
+                    border = "rounded",
+                },
+                documentation = {
+                    winhighlight = "Normal:Normal,FloatBorder:CmpCompletionBorder",
+                    border = "rounded",
+                },
             },
             experimental = {
                 ghost_text = {

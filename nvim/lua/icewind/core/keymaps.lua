@@ -10,22 +10,17 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 -- Switch buffers
-map("n", "<S-h>", "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev buffer" })
-map("n", "<S-l>", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer" })
+map("n", "<S-H>", "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev buffer" })
+map("n", "<S-L>", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer" })
 map("n", "[b", "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev buffer" })
 map("n", "]b", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer" })
 
 local haslazy, lazy = pcall(require, "lazy.core.config")
-if haslazy and lazy.spec.plugins["bufferline"] ~= nil then
-    map("n", "<S-h>", "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev buffer" })
-    map("n", "<S-l>", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer" })
-    map("n", "[b", "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev buffer" })
-    map("n", "]b", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer" })
-else
-    map("n", "<S-h>", "<cmd>bprevious<cr>", { desc = "Prev buffer" })
-    map("n", "<S-l>", "<cmd>bnext<cr>", { desc = "Next buffer" })
-    map("n", "[b", "<cmd>bprevious<cr>", { desc = "Prev buffer" })
-    map("n", "]b", "<cmd>bnext<cr>", { desc = "Next buffer" })
+if haslazy and lazy.spec.plugins["bufferline"] == nil then
+    map("n", "<S-h>", "<cmd>bprevious<cr>", { desc = "Prev buffer", remap = true })
+    map("n", "<S-l>", "<cmd>bnext<cr>", { desc = "Next buffer", remap = true })
+    map("n", "[b", "<cmd>bprevious<cr>", { desc = "Prev buffer", remap = true })
+    map("n", "]b", "<cmd>bnext<cr>", { desc = "Next buffer", remap = true })
 end
 
 -- Better window close
@@ -36,6 +31,11 @@ map("n", "<C-h>", "<C-w>h", { desc = "Go to left window", remap = true })
 map("n", "<C-j>", "<C-w>j", { desc = "Go to lower window", remap = true })
 map("n", "<C-k>", "<C-w>k", { desc = "Go to upper window", remap = true })
 map("n", "<C-l>", "<C-w>l", { desc = "Go to right window", remap = true })
+
+-- Better tabs navigation
+map("n", "<C-S-h>", "<cmd>tabprevious<cr>", { desc = "Prev tab" })
+map("n", "<C-S-l>", "<cmd>tabnext<cr>", { desc = "Next tab" })
+map("n", "<leader>Q", "<cmd>tabclose<cr>", { desc = "Close tab" })
 
 -- Create splits easily
 map("n", "<leader>h", ":split<cr>")
@@ -79,7 +79,9 @@ map("n", "<leader>8", "<Cmd>BufferLineGoToBuffer 8<CR>")
 map("n", "<leader>9", "<Cmd>BufferLineGoToBuffer 9<CR>")
 
 -- Display diagnostics messages
-map("n", "<leader>e", "<cmd>lua vim.diagnostic.open_float()<cr>", { desc = "Show diagnostic message in float window" })
+map("n", "<leader>e", "<cmd>lua vim.diagnostic.open_float()<CR>", {
+    desc = "Show diagnostic message in float window",
+})
 map("n", "<leader>xx", "<cmd>Trouble<cr>", { desc = "Diagnostics" })
 map("n", "<leader>xw", "<cmd>Trouble workspace_diagnostics<cr>", { desc = "Workspace Diagnostics" })
 map("n", "<leader>xd", "<cmd>Trouble document_diagnostics<cr>", { desc = "Document diagnostics" })
