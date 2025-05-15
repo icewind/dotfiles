@@ -4,9 +4,17 @@ return {
     ft = { 'org' },
     dependencies = { 'nvim-orgmode/org-bullets.nvim' },
     config = function()
+        local orgpath = vim.ORGFILES_PATH or '~/projects/orgfiles/'
         require('orgmode').setup({
-            org_agenda_files = vim.env.ORGFILES_PATH or '~/projects/orgfiles/**/*',
-            org_default_notes_file = vim.env.ORGFILES_REFILE_PATH or '~/projects/orgfiles/refile.org',
+            org_agenda_files = orgpath .. '**/*',
+            org_default_notes_file = vim.fs.joinpath(orgpath, 'refile.org'),
+            org_capture_templates = {
+                n = {
+                    description = "Note",
+                    template = "",
+                    target = vim.fs.joinpath(orgpath, 'notes.org'),
+                }
+            },
             mappings = {
                 org_return_uses_meta_return = true,
                 org = {
