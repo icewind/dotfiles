@@ -2,6 +2,7 @@ return {
     'nvim-orgmode/orgmode',
     event = 'VeryLazy',
     ft = { 'org' },
+    dependencies = { 'nvim-orgmode/org-bullets.nvim' },
     config = function()
         require('orgmode').setup({
             org_agenda_files = vim.env.ORGFILES_PATH or '~/projects/orgfiles/**/*',
@@ -11,6 +12,16 @@ return {
                 org = {
                     org_toggle_checkbox = { 'cix', desc = 'Toggle checkbox' },
                 }
+            },
+        })
+
+        require('org-bullets').setup({
+            symbols = {
+                checkboxes = {
+                    half = { "-", "@org.checkbox.halfchecked" },
+                    done = { "✓", "@org.keyword.done" },
+                    todo = { " ", "@org.keyword.todo" },
+                },
             },
         })
     end,
