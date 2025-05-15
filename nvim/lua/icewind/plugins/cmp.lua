@@ -58,7 +58,8 @@ return {
                 { name = "nvim_lsp" },
                 { name = "luasnip" },
                 -- Don't look at the current buffer for the word smaller than 5 chars
-                { name = "buffer", keyword_length = 5 },
+                { name = "buffer",  keyword_length = 5 },
+                { name = 'orgmode' },
             },
             window = {
                 completion = {
