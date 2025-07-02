@@ -1,15 +1,28 @@
--- Use specific language servers to format specific files
-local lsp_formatters_map = {
-    -- These null-ls should use prettierd
-    typescript = "null-ls",
-    typescriptreact = "null-ls",
-}
-
 local format_with_lsp = function(bufnr)
     vim.lsp.buf.format({
         filter = function(client)
             local buffer_type = vim.api.nvim_buf_get_option(bufnr, "filetype")
-            return lsp_formatters_map[buffer_type] == nil or lsp_formatters_map[buffer_type] == client.name
+            -- Using default formatter
+            if not vim.tbl_contains({ "typescript", "typescriptreact", "javascript", "javascriptreact", "json" }, buffer_type) then
+                return true
+            end
+
+            -- Biome
+            if vim.uv.fs_stat("./biome.json") and client.name == 'biome' then
+                return true
+            end
+
+            -- Prettier
+            if (vim.uv.fs_stat("./prettierrc") or vim.uv.fs_stat("./prettierrc.json")) and client.name == 'prettierd' then
+                return true
+            end
+
+            -- Typescript language server
+            if vim.uv.fs_stat("./package.json") and client.name == 'ts_ls' then
+                return true
+            end
+
+            return false
         end,
         bufnr = bufnr,
     })
@@ -57,6 +70,7 @@ local language_servers = {
     "svelte",
     "tailwindcss",
     "eslint",
+    "biome",
     "ts_ls",
 }
 
