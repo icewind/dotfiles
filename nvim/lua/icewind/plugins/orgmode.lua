@@ -16,7 +16,7 @@ return {
                 }
             },
             mappings = {
-                org_return_uses_meta_return = true,
+                org_return_uses_meta_return = false,
                 org = {
                     org_toggle_checkbox = { 'cix', desc = 'Toggle checkbox' },
                 }
