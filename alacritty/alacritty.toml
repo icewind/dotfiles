@@ -1,4 +1,5 @@
 [terminal]
+# Make this system dependant
 shell = "ubuntu"
 
 [font]
@@ -10,31 +11,32 @@ normal.family = "FiraCode Nerd Font"
 [window]
 padding = {x = 5, y = 5}
 
-# Colors (Gruvbox Material Medium Dark)
-
-# Default colors
+# Everforest dark medium
 [colors.primary]
-background = '#282828'
-foreground = '#d4be98'
+background = "#2d353b"
+foreground = "#d3c6aa"
 
-# Normal colors
 [colors.normal]
-black   = '#3c3836'
-red     = '#ea6962'
-green   = '#a9b665'
-yellow  = '#d8a657'
-blue    = '#7daea3'
-magenta = '#d3869b'
-cyan    = '#89b482'
-white   = '#d4be98'
+black = "#475258"
+red = "#e67e80"
+green = "#a7c080"
+yellow = "#dbbc7f"
+blue = "#7fbbb3"
+magenta = "#d699b6"
+cyan = "#83c092"
+white = "#d3c6aa"
 
-# Bright colors (same as normal colors)
 [colors.bright]
-black   = '#3c3836'
-red     = '#ea6962'
-green   = '#a9b665'
-yellow  = '#d8a657'
-blue    = '#7daea3'
-magenta = '#d3869b'
-cyan    = '#89b482'
-white   = '#d4be98'
+black = "#475258"
+red = "#e67e80"
+green = "#a7c080"
+yellow = "#dbbc7f"
+blue = "#7fbbb3"
+magenta = "#d699b6"
+cyan = "#83c092"
+white = "#d3c6aa"
+
+[keyboard]
+bindings = [
+    { key = "K", mods = "Control", chars = "\x0b" }
+]
