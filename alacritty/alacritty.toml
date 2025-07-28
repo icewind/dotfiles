@@ -38,5 +38,6 @@ white = "#d3c6aa"
 
 [keyboard]
 bindings = [
-    { key = "K", mods = "Control", chars = "\x0b" }
+    {key = "C", mods = "Control|Shift", action = "Copy"},
+    {key = "V", mods = "Control|Shift", action = "Paste"},
 ]
