@@ -36,3 +36,8 @@ magenta = "#d699b6"
 cyan = "#83c092"
 white = "#d3c6aa"
 
+[keyboard]
+bindings = [
+    {key = "C", mods = "Control|Shift", action = "Copy"},
+    {key = "V", mods = "Control|Shift", action = "Paste"},
+]
