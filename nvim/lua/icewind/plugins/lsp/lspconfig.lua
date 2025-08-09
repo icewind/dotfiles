@@ -7,23 +7,22 @@ local format_with_lsp = function(bufnr)
                 return true
             end
 
-            local is_biome = vim.uv.fs_stat("./biome.json") and client.name == 'biome'
-            local is_prettier = (vim.uv.fs_stat("./prettierrc") or vim.uv.fs_stat("./prettierrc.json")) and
-                client.name == 'prettierd'
-            local is_ts_ls = vim.uv.fs_stat("./package.json") and client.name == 'ts_ls'
+            local is_biome = vim.uv.fs_stat("./biome.json")
+            local is_prettier = (vim.uv.fs_stat("./prettierrc") or vim.uv.fs_stat("./prettierrc.json"))
+            local is_ts_ls = vim.uv.fs_stat("./package.json")
 
             -- Biome
-            if is_biome then
+            if is_biome and client.name == "biome" then
                 return true
             end
 
             -- Prettier
-            if not is_biome and is_prettier then
+            if not is_biome and is_prettier and client.name == 'prettierd' then
                 return true
             end
 
             -- Typescript language server
-            if not is_biome and not is_prettier and is_ts_ls then
+            if not is_biome and not is_prettier and is_ts_ls and client.name == 'ts_ls' then
                 return true
             end
 
