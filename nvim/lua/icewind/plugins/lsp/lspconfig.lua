@@ -37,7 +37,7 @@ local supports = function(bufnr, action)
     action = action:find("/") and action or "textDocument/" .. action
     local clients = vim.lsp.get_clients({ bufnr = bufnr })
     for _, client in ipairs(clients) do
-        if client.supports_method(action) then
+        if client:supports_method(action) then
             return true
         end
     end
@@ -174,7 +174,8 @@ return {
             callback = function(event)
                 map_keys_for_lsp(event.buf)
                 -- Automatically format the document on save
-                if vim.lsp.get_client_by_id(event.data.client_id).supports_method("textDocument/formatting") then
+
+                if vim.lsp.get_client_by_id(event.data.client_id):supports_method("textDocument/formatting") then
                     vim.api.nvim_create_autocmd("BufWritePre", {
                         group = vim.api.nvim_create_augroup("lsp-format-on-save", { clear = true }),
                         buffer = event.buf,
