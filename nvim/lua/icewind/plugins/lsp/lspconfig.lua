@@ -1,3 +1,11 @@
+local exists_in_root = function(filename)
+    return vim.uv.fs_stat(vim.fs.joinpath(vim.uv.cwd(), filename)) ~= nil
+end
+
+local is_biome = exists_in_root("biome.json")
+local is_prettier = (exists_in_root(".prettierrc") or exists_in_root(".prettierrc.json"))
+local is_ts_ls = exists_in_root("package.json")
+
 local format_with_lsp = function(bufnr)
     vim.lsp.buf.format({
         filter = function(client)
@@ -7,17 +15,13 @@ local format_with_lsp = function(bufnr)
                 return true
             end
 
-            local is_biome = vim.uv.fs_stat("./biome.json")
-            local is_prettier = (vim.uv.fs_stat("./prettierrc") or vim.uv.fs_stat("./prettierrc.json"))
-            local is_ts_ls = vim.uv.fs_stat("./package.json")
-
             -- Biome
             if is_biome and client.name == "biome" then
                 return true
             end
 
             -- Prettier
-            if not is_biome and is_prettier and client.name == 'prettierd' then
+            if not is_biome and is_prettier and client.name == 'null-ls' then
                 return true
             end
 
@@ -144,7 +148,7 @@ local setup_none_ls = function()
                 filetypes = {
                     "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "css",
                     "scss", "less", "html", "json", "jsonc", "yaml", "markdown", "markdown.mdx",
-                    "graphql", "handlebars", "astro",
+                    "graphql", "handlebars", "astro", "svelte",
                 },
                 condition = function(utils)
                     return utils.root_has_file(".prettierrc")
