@@ -11,7 +11,7 @@ local format_with_lsp = function(bufnr)
         filter = function(client)
             local buffer_type = vim.api.nvim_buf_get_option(bufnr, "filetype")
             -- Using default formatter
-            if not vim.tbl_contains({ "typescript", "typescriptreact", "javascript", "javascriptreact", "json" }, buffer_type) then
+            if not vim.tbl_contains({ "typescript", "typescriptreact", "javascript", "javascriptreact", "json", "svelte" }, buffer_type) then
                 return true
             end
 
