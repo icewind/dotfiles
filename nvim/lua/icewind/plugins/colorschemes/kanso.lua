@@ -10,6 +10,7 @@ return {
         overrides = function(colors)
             return {
                 WinSeparator = { fg = colors.palette.gray5 },
+                TelescopeBorder = { fg = colors.palette.gray5 },
             }
         end,
     },
