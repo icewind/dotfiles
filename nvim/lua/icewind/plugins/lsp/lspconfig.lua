@@ -1,24 +1,37 @@
+local exists_in_root = function(filename)
+    return vim.uv.fs_stat(vim.fs.joinpath(vim.uv.cwd(), filename)) ~= nil
+end
+
+local is_biome = exists_in_root("biome.json")
+local is_prettier = (exists_in_root(".prettierrc") or exists_in_root(".prettierrc.json"))
+local is_ts_ls = exists_in_root("package.json")
+
 local format_with_lsp = function(bufnr)
     vim.lsp.buf.format({
         filter = function(client)
             local buffer_type = vim.api.nvim_buf_get_option(bufnr, "filetype")
             -- Using default formatter
-            if not vim.tbl_contains({ "typescript", "typescriptreact", "javascript", "javascriptreact", "json" }, buffer_type) then
+            if
+                not vim.tbl_contains(
+                    { "typescript", "typescriptreact", "javascript", "javascriptreact", "json", "svelte" },
+                    buffer_type
+                )
+            then
                 return true
             end
 
             -- Biome
-            if vim.uv.fs_stat("./biome.json") and client.name == 'biome' then
+            if is_biome and client.name == "biome" then
                 return true
             end
 
             -- Prettier
-            if (vim.uv.fs_stat("./prettierrc") or vim.uv.fs_stat("./prettierrc.json")) and client.name == 'prettierd' then
+            if not is_biome and is_prettier and client.name == "null-ls" then
                 return true
             end
 
             -- Typescript language server
-            if vim.uv.fs_stat("./package.json") and client.name == 'ts_ls' then
+            if not is_biome and not is_prettier and is_ts_ls and client.name == "ts_ls" then
                 return true
             end
 
@@ -33,7 +46,7 @@ local supports = function(bufnr, action)
     action = action:find("/") and action or "textDocument/" .. action
     local clients = vim.lsp.get_clients({ bufnr = bufnr })
     for _, client in ipairs(clients) do
-        if client.supports_method(action) then
+        if client:supports_method(action) then
             return true
         end
     end
@@ -57,7 +70,7 @@ local mapkey = function(bufnr, keys, func, opts)
         desc = opts.desc,
         noremap = true,
         silent = true,
-        nowait = opts.nowait
+        nowait = opts.nowait,
     })
 end
 
@@ -75,8 +88,12 @@ local language_servers = {
 }
 
 local map_keys_for_lsp = function(bufnr)
-    mapkey(bufnr, "K", function() return vim.lsp.buf.hover({ border = "rounded" }) end, { desc = "Hover docs" })
-    mapkey(bufnr, "<c-k>", function() return vim.lsp.buf.signature_help() end, { mode = "i", desc = "Signature help" })
+    mapkey(bufnr, "K", function()
+        return vim.lsp.buf.hover({ border = "rounded" })
+    end, { desc = "Hover docs" })
+    mapkey(bufnr, "<c-k>", function()
+        return vim.lsp.buf.signature_help()
+    end, { mode = "i", desc = "Signature help" })
 
     -- Map only if this is not a part of DiffView tabpage
     mapkey(bufnr, "<leader>ca", vim.lsp.buf.code_action, { mode = { "n", "v" }, has = "codeAction" })
@@ -100,12 +117,16 @@ local map_keys_for_lsp = function(bufnr)
         desc = "Refresh & Display Codelens",
     })
 
-    mapkey(bufnr, "<leader>cf", function() format_with_lsp(bufnr) end, {
+    mapkey(bufnr, "<leader>cf", function()
+        format_with_lsp(bufnr)
+    end, {
         desc = "Format the file",
         has = "formatting",
     })
 
-    mapkey(bufnr, "<leader>cf", function() format_with_lsp(bufnr) end, {
+    mapkey(bufnr, "<leader>cf", function()
+        format_with_lsp(bufnr)
+    end, {
         mode = "v",
         desc = "Format selected text",
         has = "rangeFormatting",
@@ -118,7 +139,7 @@ local map_keys_for_lsp = function(bufnr)
     })
     mapkey(bufnr, "gD", vim.lsp.buf.declaration, {
         desc = "Go to declaration",
-        has = "declaration"
+        has = "declaration",
     })
     mapkey(bufnr, "<leader>rn", vim.lsp.buf.rename, {
         has = "rename",
@@ -138,18 +159,33 @@ local setup_none_ls = function()
         sources = {
             null_ls.builtins.formatting.prettierd.with({
                 filetypes = {
-                    "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "css",
-                    "scss", "less", "html", "json", "jsonc", "yaml", "markdown", "markdown.mdx",
-                    "graphql", "handlebars", "astro",
+                    "javascript",
+                    "javascriptreact",
+                    "typescript",
+                    "typescriptreact",
+                    "vue",
+                    "css",
+                    "scss",
+                    "less",
+                    "html",
+                    "json",
+                    "jsonc",
+                    "yaml",
+                    "markdown",
+                    "markdown.mdx",
+                    "graphql",
+                    "handlebars",
+                    "astro",
+                    "svelte",
                 },
                 condition = function(utils)
                     return utils.root_has_file(".prettierrc")
                         or utils.root_has_file(".prettierrc.json")
                         or utils.root_has_file(".prettierrc.js")
                 end,
-            })
-        }
-    });
+            }),
+        },
+    })
 end
 
 return {
@@ -162,7 +198,7 @@ return {
     },
     config = function()
         vim.lsp.config("*", {
-            capabilities = vim.lsp.protocol.make_client_capabilities()
+            capabilities = vim.lsp.protocol.make_client_capabilities(),
         })
 
         vim.api.nvim_create_autocmd("LspAttach", {
@@ -170,24 +206,25 @@ return {
             callback = function(event)
                 map_keys_for_lsp(event.buf)
                 -- Automatically format the document on save
-                if vim.lsp.get_client_by_id(event.data.client_id).supports_method("textDocument/formatting") then
+
+                if vim.lsp.get_client_by_id(event.data.client_id):supports_method("textDocument/formatting") then
                     vim.api.nvim_create_autocmd("BufWritePre", {
-                        group = vim.api.nvim_create_augroup("lsp-format-on-save", { clear = true }),
+                        group = vim.api.nvim_create_augroup("lsp-format-on-save", { clear = false }),
                         buffer = event.buf,
                         callback = function()
                             format_with_lsp(event.buf)
                         end,
                     })
                 end
-            end
+            end,
         })
 
         require("mason").setup()
         require("fidget").setup()
         require("mason-lspconfig").setup({
-            ensure_installed = vim.tbl_values(language_servers)
+            ensure_installed = vim.tbl_values(language_servers),
         })
 
         setup_none_ls()
-    end
+    end,
 }

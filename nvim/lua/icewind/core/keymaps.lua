@@ -82,9 +82,6 @@ map("n", "<leader>9", "<Cmd>BufferLineGoToBuffer 9<CR>")
 map("n", "<leader>e", "<cmd>lua vim.diagnostic.open_float()<CR>", {
     desc = "Show diagnostic message in float window",
 })
-map("n", "<leader>xx", "<cmd>Trouble<cr>", { desc = "Diagnostics" })
-map("n", "<leader>xw", "<cmd>Trouble workspace_diagnostics<cr>", { desc = "Workspace Diagnostics" })
-map("n", "<leader>xd", "<cmd>Trouble document_diagnostics<cr>", { desc = "Document diagnostics" })
 
 map("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<cr>")
 map("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<cr>")
