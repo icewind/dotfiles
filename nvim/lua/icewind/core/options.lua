@@ -121,3 +121,8 @@ vim.diagnostic.config({
         },
     },
 })
+
+-- On windows Telescope fails to open files with parentheses in path
+if vim.fn.has('win64') == 1 or vim.fn.has('win32') == 1 then
+    vim.o.isfname = table.concat({ vim.o.isfname, "(", ")" }, ",")
+end
