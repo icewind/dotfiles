@@ -77,7 +77,7 @@ end
 -- configuration is in a foler `/after/lsp/{name}.lua`
 local language_servers = {
     "lua_ls",
-    "ltex",
+    "ltex_plus",
     "marksman",
     "rust_analyzer",
     "svelte",
