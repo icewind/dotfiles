@@ -27,10 +27,10 @@ vim.cmd.colorscheme(constants.color_scheme)
 set.signcolumn = "yes:1"
 set.fillchars = { eob = " " }
 set.shortmess:append({ W = true, I = true, c = true, C = true })
-set.showmode = false               -- Dont show mode since we have a statusline
+set.showmode = false -- Dont show mode since we have a statusline
 set.wildmode = "longest:full,full" -- Command-line completion mode
 set.splitkeep = "screen"
-vim.o.winborder = "none"           -- Lots of plugins are getting crazy with this one enabled
+vim.o.winborder = "none" -- Lots of plugins are getting crazy with this one enabled
 
 set.mouse = "a"
 set.clipboard = "unnamedplus" -- Use system clipboard
@@ -75,7 +75,7 @@ g.noswapfile = true
 g.noundofile = true
 
 -- Popup menu
-set.pumblend = 0   -- Popup blend. Values from 0 to 100
+set.pumblend = 0 -- Popup blend. Values from 0 to 100
 set.pumheight = 10 -- Maximum number of entries in a popup
 
 -- No need to set specific color for floating windows, I use rounded border for them
@@ -108,7 +108,7 @@ g.mkdp_theme = "light"
 
 vim.diagnostic.config({
     float = {
-        border = "rounded"
+        border = "rounded",
     },
     severity_short = true,
     signs = {
@@ -123,6 +123,9 @@ vim.diagnostic.config({
 })
 
 -- On windows Telescope fails to open files with parentheses in path
-if vim.fn.has('win64') == 1 or vim.fn.has('win32') == 1 then
+if vim.fn.has("win64") == 1 or vim.fn.has("win32") == 1 then
     vim.o.isfname = table.concat({ vim.o.isfname, "(", ")" }, ",")
 end
+
+-- Builtins
+require("vim._core.ui2").enable({})
