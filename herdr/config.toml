@@ -1,0 +1,41 @@
+onboarding = false
+
+# Kanso "mist" variant — palette from kanso.nvim lua/kanso/colors.lua
+[theme]
+name = "catppuccin"
+
+[theme.custom]
+# Background scale: mistBg0..mistBg3 / gray4
+panel_bg = "#22262D"     # mistBg0 — base background
+surface_dim = "#22262D"  # mistBg0 — dimmest surface
+surface0 = "#2a2c35"     # mistBg1
+surface1 = "#393B44"     # mistBg2
+overlay0 = "#5C6066"     # mistBg3
+overlay1 = "#75797f"     # gray4
+# Foreground: fg / fg_dim (gray2)
+text = "#C5C9C7"         # fg
+subtext0 = "#A4A7A4"     # gray2
+# Accent + semantic colors (mist default-foreground palette)
+accent = "#8ba4b0"       # blue3 (function)
+mauve = "#8992a7"        # violet2 (keyword/statement)
+green = "#8a9a7b"        # green3 (string)
+yellow = "#c4b28a"       # yellow3 (special)
+red = "#c4746e"          # red3
+blue = "#8ba4b0"         # blue3
+teal = "#8ea4a2"         # aqua (type)
+peach = "#b6927b"        # orange (constant)
+
+[keys]
+prefix = "ctrl+a"
+
+focus_pane_left = "ctrl+h"
+focus_pane_down = "ctrl+j"
+focus_pane_up = "ctrl+k"
+focus_pane_right = "ctrl+l"
+
+split_vertical = "prefix+%"
+split_horizontal = 'prefix+"'
+
+new_tab = "prefix+c"
+next_tab = "ctrl+shift+right"
+previous_tab = "ctrl+shift+left"
