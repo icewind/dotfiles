@@ -131,14 +131,15 @@ config.keys = {
 	},
 
 	-- Splits, inherit current pane cwd (tmux: " = down, % = right)
+	-- SHIFT required because " and % are Shift+' / Shift+5
 	{
 		key = '"',
-		mods = "LEADER",
+		mods = "LEADER|SHIFT",
 		action = wezterm.action.SplitPane({ direction = "Down" }),
 	},
 	{
 		key = "%",
-		mods = "LEADER",
+		mods = "LEADER|SHIFT",
 		action = wezterm.action.SplitPane({ direction = "Right" }),
 	},
 
