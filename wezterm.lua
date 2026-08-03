@@ -88,6 +88,122 @@ config.keys = {
 		mods = "CTRL",
 		action = wezterm.action.DisableDefaultAssignment,
 	},
+
+	-- Pane navigation without prefix (tmux: Alt + arrows)
+	{
+		key = "LeftArrow",
+		mods = "ALT",
+		action = wezterm.action.ActivatePaneDirection("Left"),
+	},
+	{
+		key = "RightArrow",
+		mods = "ALT",
+		action = wezterm.action.ActivatePaneDirection("Right"),
+	},
+	{
+		key = "UpArrow",
+		mods = "ALT",
+		action = wezterm.action.ActivatePaneDirection("Up"),
+	},
+	{
+		key = "DownArrow",
+		mods = "ALT",
+		action = wezterm.action.ActivatePaneDirection("Down"),
+	},
+
+	-- Tab navigation without prefix (tmux: Ctrl+Shift + arrows)
+	{
+		key = "LeftArrow",
+		mods = "CTRL|SHIFT",
+		action = wezterm.action.ActivateTabRelative(-1),
+	},
+	{
+		key = "RightArrow",
+		mods = "CTRL|SHIFT",
+		action = wezterm.action.ActivateTabRelative(1),
+	},
+
+	-- Send prefix when leader pressed twice (tmux: bind C-a send-prefix)
+	{
+		key = "a",
+		mods = "LEADER|CTRL",
+		action = wezterm.action.SendKey({ key = "a", mods = "CTRL" }),
+	},
+
+	-- Splits, inherit current pane cwd (tmux: " = down, % = right)
+	{
+		key = '"',
+		mods = "LEADER",
+		action = wezterm.action.SplitPane({ direction = "Down" }),
+	},
+	{
+		key = "%",
+		mods = "LEADER",
+		action = wezterm.action.SplitPane({ direction = "Right" }),
+	},
+
+	-- Tab management under leader (tmux defaults)
+	{
+		key = "c",
+		mods = "LEADER",
+		action = wezterm.action.SpawnTab("CurrentPaneDomain"),
+	},
+	{
+		key = "n",
+		mods = "LEADER",
+		action = wezterm.action.ActivateTabRelative(1),
+	},
+	{
+		key = "p",
+		mods = "LEADER",
+		action = wezterm.action.ActivateTabRelative(-1),
+	},
+	{
+		key = "&",
+		mods = "LEADER",
+		action = wezterm.action.CloseCurrentTab({ confirm = true }),
+	},
+
+	-- Pane management under leader (tmux defaults)
+	{
+		key = "x",
+		mods = "LEADER",
+		action = wezterm.action.CloseCurrentPane({ confirm = true }),
+	},
+	{
+		key = "z",
+		mods = "LEADER",
+		action = wezterm.action.TogglePaneZoomState,
+	},
+	{
+		key = "LeftArrow",
+		mods = "LEADER",
+		action = wezterm.action.ActivatePaneDirection("Left"),
+	},
+	{
+		key = "RightArrow",
+		mods = "LEADER",
+		action = wezterm.action.ActivatePaneDirection("Right"),
+	},
+	{
+		key = "UpArrow",
+		mods = "LEADER",
+		action = wezterm.action.ActivatePaneDirection("Up"),
+	},
+	{
+		key = "DownArrow",
+		mods = "LEADER",
+		action = wezterm.action.ActivatePaneDirection("Down"),
+	},
 }
+
+-- Select tab by index (tmux: leader + 1..9, base-index 1)
+for i = 1, 9 do
+	table.insert(config.keys, {
+		key = tostring(i),
+		mods = "LEADER",
+		action = wezterm.action.ActivateTab(i - 1),
+	})
+end
 
 return config
