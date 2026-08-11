@@ -24,7 +24,9 @@ if haslazy and lazy.spec.plugins["bufferline"] == nil then
 end
 
 -- Better window close
-map("n", "<leader>q", "<cmd>Bdelete!<CR>")
+map("n", "<leader>q", function()
+    Snacks.bufdelete({ force = true })
+end, { desc = "Close buffer" })
 
 -- Better window navigation
 map("n", "<C-h>", "<C-w>h", { desc = "Go to left window", remap = true })
