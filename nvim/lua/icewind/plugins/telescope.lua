@@ -78,6 +78,7 @@ return {
         end, { desc = "[/] Fuzzily search in current buffer]" })
 
         vim.keymap.set("n", "<leader>sf", require("telescope.builtin").find_files, { desc = "[S]earch [F]iles" })
+        vim.keymap.set("n", "<leader>sc", require("telescope.builtin").git_status, { desc = "[S]earch [C]hanges" })
         vim.keymap.set("n", "<leader>sh", require("telescope.builtin").help_tags, { desc = "[S]earch [H]elp" })
         vim.keymap.set(
             "n",

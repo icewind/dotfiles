@@ -202,6 +202,17 @@ return {
             capabilities = require("cmp_nvim_lsp").default_capabilities(),
         })
 
+        -- Disable markdown markup in the hover doc popup
+        local original_open_float = vim.lsp.util.open_floating_preview
+        ---@diagnostic disable-next-line: duplicate-set-field
+        vim.lsp.util.open_floating_preview = function(contents, syntax, opts)
+            local bufnr, winnr = original_open_float(contents, syntax, opts)
+            if winnr and vim.api.nvim_win_is_valid(winnr) and not vim.bo[bufnr].modifiable then
+                vim.wo[winnr].concealcursor = "n"
+            end
+            return bufnr, winnr
+        end
+
         vim.api.nvim_create_autocmd("LspAttach", {
             group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
             callback = function(event)
