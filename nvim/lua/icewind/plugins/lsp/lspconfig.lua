@@ -9,7 +9,7 @@ local is_ts_ls = exists_in_root("package.json")
 local format_with_lsp = function(bufnr)
     vim.lsp.buf.format({
         filter = function(client)
-            local buffer_type = vim.api.nvim_buf_get_option(bufnr, "filetype")
+            local buffer_type = vim.bo[bufnr].filetype
             -- Using default formatter
             if
                 not vim.tbl_contains(
@@ -74,7 +74,7 @@ local mapkey = function(bufnr, keys, func, opts)
     })
 end
 
--- configuration is in a foler `/after/lsp/{name}.lua`
+-- per-server configuration is in `/lsp/{name}.lua` (vim.lsp.config runtimepath dir)
 local language_servers = {
     "lua_ls",
     "ltex_plus",
