@@ -11,6 +11,6 @@ return {
 
         vim.keymap.set("n", "<leader>bs", require("treesj").split, { desc = "[?] Split block" })
 
-        vim.keymap.set("n", "<leader>bj", require("treesj").split, { desc = "[?] Join block" })
+        vim.keymap.set("n", "<leader>bj", require("treesj").join, { desc = "[?] Join block" })
     end,
 }

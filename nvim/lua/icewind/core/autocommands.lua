@@ -38,9 +38,13 @@ vim.api.nvim_create_autocmd({ "VimResized" }, {
 })
 
 -- Add database to completion sources for sql files
-vim.cmd(
-    [[autocmd FileType sql,mysql,plsql lua require('cmp').setup.buffer({sources={{name='vim-dadbod-completion'}}})]]
-)
+vim.api.nvim_create_autocmd("FileType", {
+    group = augroup("sql_cmp"),
+    pattern = { "sql", "mysql", "plsql" },
+    callback = function()
+        require("cmp").setup.buffer({ sources = { { name = "vim-dadbod-completion" } } })
+    end,
+})
 
 -- close some filetypes with just <q>
 vim.api.nvim_create_autocmd("FileType", {

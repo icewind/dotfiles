@@ -195,10 +195,11 @@ return {
         "mason-org/mason-lspconfig.nvim",
         "j-hui/fidget.nvim",
         "nvimtools/none-ls.nvim",
+        "hrsh7th/cmp-nvim-lsp",
     },
     config = function()
         vim.lsp.config("*", {
-            capabilities = vim.lsp.protocol.make_client_capabilities(),
+            capabilities = require("cmp_nvim_lsp").default_capabilities(),
         })
 
         vim.api.nvim_create_autocmd("LspAttach", {

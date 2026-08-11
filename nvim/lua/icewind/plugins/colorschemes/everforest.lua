@@ -1,9 +1,8 @@
 return {
     "sainnhe/everforest",
-    version = false,
-    lazy = false,
+    lazy = true,
     priority = 1000,
-    config = function()
+    init = function()
         vim.g.everforest_background = "medium"
         vim.g.everforest_better_performance = 1
         vim.g.everforest_disable_italic_comment = 1

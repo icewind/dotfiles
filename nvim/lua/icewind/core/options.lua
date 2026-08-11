@@ -70,9 +70,9 @@ set.grepformat = "%f:%l:%c:%m"
 set.grepprg = "rg --vimgrep"
 
 -- Disable swap files. No need because of version control systems
-g.nobackup = true
-g.noswapfile = true
-g.noundofile = true
+set.backup = false
+set.swapfile = false
+set.undofile = false
 
 -- Popup menu
 set.pumblend = 0 -- Popup blend. Values from 0 to 100
@@ -88,7 +88,7 @@ set.sessionoptions = { "buffers", "curdir", "tabpages", "winsize" }
 -- Using treesitter to fold/unfold
 vim.wo.foldlevel = 20
 vim.wo.foldmethod = "expr"
-vim.wo.foldexpr = "nvim_treesitter#foldexpr()"
+vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 
 -- Autocompletion
 set.completeopt = { "menu", "menuone", "noselect" }
